@@ -1,0 +1,63 @@
+{
+  "id": "",
+  "projectGroupId": "",
+  "projectGroupSlug": "",
+  "projectName": "TSBA003",
+  "projectSlug": "TSBA003",
+  "projectDesc": "",
+  "members": [
+	{
+      "dept": "협력사",
+      "loginId": "91284783",
+      "name": "강태경",
+      "roleId": "201"
+    },
+    {
+      "dept": "D-Space",
+      "loginId": "91295158",
+      "name": "노은별",
+      "roleId": "202"
+    }
+  ],
+  "sparrows": [
+    {
+      "sparrowId": 10021,
+      "sparrowProjectName": "iotmakers-bff-layer"
+    }
+  ],
+  "codeeyes": [
+    {
+      "codeeyeProjectId": 503,
+      "codeeyeProjectName": "DASHBOARD_master"
+    }
+  ],
+  "jira": {
+    "jiraKey": "TSBA003",
+    "jiraName": "TSBA003"
+  },
+  "git": {
+    "gitGroupName": "TSBA003",
+    "gitGroupPath": "TSBA003",
+    "projects": [
+      {
+        "gitProjectName": "TSBA0031",
+        "gitProjectPath": "TSBA0031"
+      }
+    ]
+  },
+  "exists": {
+    "jira": true,
+    "gitlab": true,
+    "jenkins": true,
+    "nexus": false
+  },
+  "jenkins": {
+    "jenkinsFolderName": "TSBA003",
+    "jenkinsJob": [
+      {
+        "jenkinsJobName": "TSBA0031",
+        "jenkinsJobTypeCode": "10401"
+      }
+    ]
+  }
+}
