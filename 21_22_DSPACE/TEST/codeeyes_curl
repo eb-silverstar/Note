@@ -1,0 +1,3 @@
+curl -X GET "https://codecicd.kt.co.kr/pearl/rest_user/apikey?login_id=91295158"
+curl -X GET "https://codecicd.kt.co.kr/openapi/api/v1/cp-summary/489" -H "accept: */*" -H "authorization: APPG 94ad2337869c4800ac94b1fdd58edaee"
+curl -X GET "https://codecicd.kt.co.kr/openapi/api/v1/cp-summary/489" -H "accept: */*" -H "authorization: APPG 380e638cc61d44b397fce99bd1c0efdd"
