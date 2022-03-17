@@ -1,57 +1,57 @@
 {
 	"id":long,
 	"projectGroupId":"",
-    "projectGroupSlug":"",
-    "projectName":"",
-    "projectSlug":"",
-    "projectDesc":",     
-    "members":[
+	"projectGroupSlug":"",
+	"projectName":"",
+	"projectSlug":"",
+	"projectDesc":",	 
+	"members":[
 		{
-          "loginId":"",
-          "name":"",
-          "roleId":"",
+		  "loginId":"",
+		  "name":"",
+		  "roleId":"",
 		  "administrator":boolean
-        }
-    ],
+		}
+	],
 	"jira":[
-       {
+	   {
 		   "jiraId":long,
-           "jiraName":"",
-           "jiraKey":""
-       }
+		   "jiraName":"",
+		   "jiraKey":""
+	   }
    ],
-    "gitlab":{
-        "groups":[
-            {
+	"gitlab":{
+		"groups":[
+			{
 				"gitGroupId":"",
-                "gitGroupName":"",
-                "gitGroupPath":"",
-                "groups":[
-                    {
+				"gitGroupName":"",
+				"gitGroupPath":"",
+				"groups":[
+					{
 						"gitGroupId":"",
-                        "gitGroupName":"",
-                        "gitGroupPath":"",
-                        "groups":[],
-                        "projects":[
-                            {
+						"gitGroupName":"",
+						"gitGroupPath":"",
+						"groups":[],
+						"projects":[
+							{
 								"gitProjectId":"",
-                                "gitProjectName":"",
-                                "gitProjectPath":""
-                            }
-                        ]
-                    }
-                ],
-                "projects":[]
-            }
-        ],
-        "projects":[
-            {
+								"gitProjectName":"",
+								"gitProjectPath":""
+							}
+						]
+					}
+				],
+				"projects":[]
+			}
+		],
+		"projects":[
+			{
 				"gitProjectId":"",
-                "gitProjectName":"",
-                "gitProjectPath":"" // Top-Level Project일 경우만 "사번/path" 형태
-           }
-        ]
-    },
+				"gitProjectName":"",
+				"gitProjectPath":"" // Top-Level Project일 경우만 "사번/path" 형태
+		   }
+		]
+	},
 	"jenkins" :{
 		"folders":[
 			{
@@ -120,22 +120,22 @@
 		]
 	},
 	"sparrows":[
-        {
-          "sparrowId":long,
-          "sparrowProjectName":""
-        }
-    ],
-    "codeeyes":[
-        {
-          "codeeyeProjectId":long,
-          "codeeyeProjectName":""
-        }
-    ],
+		{
+		  "sparrowId":long,
+		  "sparrowProjectName":""
+		}
+	],
+	"codeeyes":[
+		{
+		  "codeeyeProjectId":long,
+		  "codeeyeProjectName":""
+		}
+	],
 	"exists":{
-        "jira":boolean,
-        "gitLab":boolean,
-        "jenkins":boolean,
-        "nexus":boolean
-    },
+		"jira":boolean,
+		"gitLab":boolean,
+		"jenkins":boolean,
+		"nexus":boolean
+	},
 	"zone":""
 }
