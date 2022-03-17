@@ -1,0 +1,13 @@
+Default Issue Type Scheme에 Project 추가(API 사용) 시 첨부와 같은 오류 발생.
+
+Jira DB 중 configurationcontext table의 id=10000 이 자동 삭제되어 발생하는 오류로
+
+ 
+
+INSERT INTO configurationcontext VALUES ('10000',NULL,NULL,'issuetype','10000');
+
+ 
+
+위 항목 insert 후 몇 분 지나면 정상화됨.
+
+Default 아닌 다른 Issue Type Scheme 에 Project 추가 하는 것은 이상 없음.
