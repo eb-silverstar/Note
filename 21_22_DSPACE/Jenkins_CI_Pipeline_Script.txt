@@ -1,0 +1,45 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git credentialsId: 'dspace_ci_backend_git', url: 'https://gitlab.dspace.kt.co.kr/DS/d-space-portal.git', branch: 'dev'
+            }
+        }
+
+        stage('Clean') {
+            steps {
+				sh "cd '/data/jenkins_home/workspace/Developer Space/D-Space CI BackEnd' && /maven/bin/mvn clean -e -s ./settings.xml"
+            }
+        }
+		stage('Build') {
+			steps {
+				sh "cd '/data/jenkins_home/workspace/Developer Space/D-Space CI BackEnd' && /maven/bin/mvn install -e -s ./settings.xml -Dmaven.test.skip=true"
+			}
+		}
+		stage('Deploy') {
+			steps {
+				sh "cd '/data/jenkins_home/workspace/Developer Space/D-Space CI BackEnd/target' && scp d-space-portal-0.0.1-SNAPSHOT.war SECUSER@10.217.66.103:/home/SECUSER/"
+			}
+		}
+        stage('Service') {
+			steps{
+				script {
+					def remote = [:]
+					remote.name = 'p-stest-tk1-e07'
+					remote.host = '10.217.66.103'
+					remote.user = 'SECUSER'
+					remote.password = 'archiSW1234!'
+					remote.allowAnyHosts = true
+					sshCommand remote: remote, command:"sudo systemctl stop tomcat && sudo sleep 5"
+					sshCommand remote: remote, command:"sudo mv /app/application/d-space-portal-0.0.1-SNAPSHOT.war /home/SECUSER/d-space-portal-0.0.1-SNAPSHOT.war_\$(date '+%Y%m%d') && sudo sleep 1"
+					sshCommand remote: remote, command:"sudo rm -rf /app/application/* && sudo sleep 1"
+					sshCommand remote: remote, command:"sudo mv /home/SECUSER/d-space-portal-0.0.1-SNAPSHOT.war /app/application "
+					sshCommand remote: remote, command:"sudo chown tomcat:tomcat /app/application/d-space-portal-0.0.1-SNAPSHOT.war && sudo sleep 1"
+					sshCommand remote: remote, command:"sudo systemctl start tomcat"
+				} 
+			}		
+        }
+    }
+}
