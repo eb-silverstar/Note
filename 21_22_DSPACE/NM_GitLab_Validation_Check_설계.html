@@ -1,0 +1,682 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>Gitlab Validation </title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	text-indent: -1.7em;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+}
+
+.simple-table-header {
+	background: rgb(247, 246, 243);
+	color: black;
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(145, 145, 142, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(187, 132, 108, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(215, 129, 58, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 148, 51, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(108, 155, 125, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(91, 151, 189, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(167, 130, 195, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(205, 116, 159, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(225, 111, 100, 1);
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="d048a4f5-2525-416e-9934-67626e7d33c6" class="page mono"><header><h1 class="page-title">Gitlab Validation </h1></header><div class="page-body"><h2 id="220fe0fd-0d97-4018-9248-63600befd270" class="">최상위 프로젝트</h2><hr id="88efac2f-05f6-49a3-91b5-d5dda67b4132"/><div id="605ac617-0594-46e5-a993-f0e72e3ee8f2" class="column-list"><div id="f42e77bf-0750-4acc-8b79-8cf0b37c5b01" style="width:37.5%" class="column"><p id="7418ef07-feac-46d3-88ab-26ed4f78408a" class="">Project Name</p><ul id="6dafc807-0f0f-4ce0-914e-8d54dbef3f99" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사<ul id="893a9022-2565-429c-9807-6a6046daa7f5" class="bulleted-list"><li style="list-style-type:circle">문자, 숫자, 이모티콘</li></ul><ul id="56e40b18-6435-4eb2-872b-3bf575df596c" class="bulleted-list"><li style="list-style-type:circle">특수문자 : <code>_</code> <code>-</code> <code>.</code> <code> </code>  </li></ul><ul id="1c799f32-53d0-46da-87d5-06c52043cefe" class="bulleted-list"><li style="list-style-type:circle">특수문자 <code>_</code> 로 시작 가능하다.</li></ul><ul id="d44dff2f-5d79-44dc-8ab6-ca5f6cf4333e" class="bulleted-list"><li style="list-style-type:circle">공백 2글자 이상일 경우 
+하나의 1글자로 변경</li></ul></li></ul><ul id="6128a8f5-5ff7-4fcf-a4ba-cdf3b23e0d55" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="a9b621ac-4fd8-4441-9cac-be26c92a954f" class="bulleted-list"><li style="list-style-type:circle">최대 255글자 </li></ul><ul id="be0732c4-1c5b-4e38-a1ce-4d9eb69ed607" class="bulleted-list"><li style="list-style-type:circle">최소 1글자</li></ul></li></ul><ul id="ea541089-ac65-4c05-9f21-6bece9efee04" class="bulleted-list"><li style="list-style-type:disc">텍스트 중복 검사 <ul id="f1d4d7f6-9437-4ca5-bfa1-ab582941e4d0" class="bulleted-list"><li style="list-style-type:circle">대소문자 구분 O
+<code>QWE</code> = <code>qwe</code> 같다 </li></ul><ul id="e3d8a7c1-7460-49c5-8585-e42476de142a" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트에서 중복된
+프로젝트 이름은 불가능하다</li></ul></li></ul></div><div id="694b2fce-6ea1-4c8f-967c-946f6f3b02c7" style="width:62.5%" class="column"><p id="3f9b7580-3233-4598-a435-cf399804328e" class="">Project Slug</p><ul id="d1757410-6b5b-4041-b430-415a5fd2cce1" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사 <ul id="d83637a4-6ebe-45e8-a46d-5b28c941aed8" class="bulleted-list"><li style="list-style-type:circle">문자, 숫자</li></ul><ul id="f6d5e103-15ad-4160-a0d9-571cf49c2479" class="bulleted-list"><li style="list-style-type:circle">특수문자 : <code>_</code> <code>-</code> <code>.</code> </li></ul><ul id="655b36f4-10ff-4b3e-bf9e-8c43778a58f7" class="bulleted-list"><li style="list-style-type:circle"><code>-</code> 를 제외한 다른 특수문자는 맨 앞에 넣을 수 있다.</li></ul><ul id="8c99eab7-9d69-46ca-8e73-90c4f0bf9f84" class="bulleted-list"><li style="list-style-type:circle"><code>.</code> <code>.git</code> <code>.atom</code> 으로 끝날 수 없다.</li></ul></li></ul><ul id="8b6d31f6-a90b-413a-8cb8-82ced4a4eb73" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="10baa15d-450d-40fe-88f5-0fb227c34482" class="bulleted-list"><li style="list-style-type:circle">ID 와 <code>/</code> 를 포함해서 최대 255글자 </li></ul><ul id="230c19a9-6f38-4bbd-9315-0e5e5b50dc36" class="bulleted-list"><li style="list-style-type:circle">최소 1글자 </li></ul></li></ul><ul id="7b3f00fc-5acc-47b6-ab8a-87376fe4511f" class="bulleted-list"><li style="list-style-type:disc">텍스트 중복 검사<ul id="642a7874-1b3a-4516-8c4a-9c4638d4c031" class="bulleted-list"><li style="list-style-type:circle">대소문자 구분 X
+<code>QWE</code> ≠ <code>qwe</code> 다르다</li></ul><ul id="35845fd8-f124-4fd3-adb5-40d62ba9b9be" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트에서 중복된
+프로젝트 주소는 불가능하다</li></ul></li></ul><pre id="1e1b0acf-982b-4a44-8fcc-770df630e25f" class="code"><code>## 길이 검사 설명
+- ID : 91298184
+- Slug : MINSEOK
+- Project Path : https://gitlab.tbdspace.kt.co.kr/91298184/MINSEOK
+https://gitlab.tbdspace.kt.co.kr/ 를 제외한 
+&quot;91298184/MINSEOK&quot; 가 최대 255글자까지 
+
+D-Space 에서는 사번 8글자를 사용하기 때문에
+사번8글자 + /1글자 = 9글자 
+255 - 9 = 246 
+Project Slug 는 최대 246글자를 사용할 수 있다.</code></pre></div></div><h2 id="a4a13377-9984-471b-8fee-1c4a47bba68e" class="">최상위 그룹 </h2><hr id="68f7ebe6-29e8-4231-a6c0-7637ebd06760"/><div id="f2ff2a4d-fd10-4608-abe6-ec1541593f0d" class="column-list"><div id="5e5afac5-0ac0-45b0-b06f-f99a53305927" style="width:50%" class="column"><p id="e53961f1-d405-43ce-a75a-74827de21be4" class="">Group Name</p><ul id="d5ff18e9-5bee-4ecf-bff4-d59764e92a0d" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사<ul id="5d763ad2-5ea9-45f9-8f79-203cd887014a" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트 Project Name 텍스트 검사와 동일</li></ul><ul id="4960b0cd-19c2-4401-bc89-5c1ed3c73cc8" class="bulleted-list"><li style="list-style-type:circle">특수문자 <code>(</code> <code>)</code> 추가 </li></ul></li></ul><ul id="539fa575-ca16-42d1-a8f5-087171c89eab" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="479306f4-0611-40ef-bf78-d573e238b324" class="bulleted-list"><li style="list-style-type:circle">최대 255글자</li></ul><ul id="66baa50b-aac7-48db-909b-954ef6b82c2d" class="bulleted-list"><li style="list-style-type:circle">최소 1글자</li></ul></li></ul><ul id="65b861c6-b680-4b2a-8afb-079c3270a2c9" class="bulleted-list"><li style="list-style-type:disc">중복 검사 <ul id="db4f8631-76f2-4a11-a71f-3864c90f5ea0" class="bulleted-list"><li style="list-style-type:circle">없음 </li></ul></li></ul></div><div id="fbcc1e83-6186-45ef-a750-354a76960a0a" style="width:50%" class="column"><p id="e28eeb96-0a20-4853-b03c-90b935505cfc" class="">Group Slug</p><ul id="594252d0-a16b-4854-aaf3-69d1689ea906" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사 <ul id="64670714-bc2b-4907-a23e-58ec1078ca4f" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트 Project Slug 텍스트 검사와 동일</li></ul></li></ul><ul id="12b20815-3fd6-49f3-9933-8255fa47c101" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="9e9792b1-e266-4fe7-ab60-84cde4a7c9f9" class="bulleted-list"><li style="list-style-type:circle">그룹 주소와 <code>/</code> 를 포함해서 255글자 </li></ul><ul id="04bba261-7852-4a14-ad0f-800c01504fff" class="bulleted-list"><li style="list-style-type:circle">최소 2글자 </li></ul></li></ul><ul id="c3799968-f6d3-4b47-91ad-5d3896095fc6" class="bulleted-list"><li style="list-style-type:disc">중복 검사<ul id="7d5d2fc2-17a8-4935-9dc8-eeeca14e7141" class="bulleted-list"><li style="list-style-type:circle">대소문자 구분 X
+<code>QWE</code> ≠ <code>qwe</code> 다르다 </li></ul><ul id="1d4b6477-6662-4965-926d-a03bf706eb3f" class="bulleted-list"><li style="list-style-type:circle">최상위 그룹에서 중복된
+그룹 주소는 불가능하다. </li></ul></li></ul></div></div><h2 id="252d985c-3f31-417d-b547-884ce5bebcf6" class="">서브 그룹 </h2><hr id="787f6319-2bec-4967-a5aa-0c47883fdf4a"/><div id="2845ed65-0f3c-457a-baca-b57dfbdf503e" class="column-list"><div id="2fc9791d-3563-4364-9986-e1e55c3cb2c2" style="width:50%" class="column"><p id="46e18992-9257-43f3-b626-7e2e0bbb9284" class="">Group Name</p><ul id="f01bb48a-85b8-4149-a816-b96c695dda24" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사<ul id="e39ef522-75c9-4d2a-916d-d5c74e777678" class="bulleted-list"><li style="list-style-type:circle">최상위 그룹 Group Name 텍스트 검사와 동일</li></ul></li></ul><ul id="f0b123f5-c774-4658-b0b7-4756c863e7b3" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="abcc7c0d-9ce0-441a-9b2d-75b8c980fb0f" class="bulleted-list"><li style="list-style-type:circle">최대 255글자</li></ul><ul id="29e08a41-cfa5-4d57-938c-9a3612ada511" class="bulleted-list"><li style="list-style-type:circle">최소 1글자</li></ul></li></ul><ul id="f7c32159-1386-4b38-9f62-ac1757159096" class="bulleted-list"><li style="list-style-type:disc">중복 검사 <ul id="09c5b20c-0c1f-49c2-b9cc-1a8e6de26384" class="bulleted-list"><li style="list-style-type:circle">대소문자 구분 O
+<code>QWE</code> = <code>qwe</code> 같다 </li></ul><ul id="acf6037c-cac9-419e-af78-5a7d58757203" class="bulleted-list"><li style="list-style-type:circle">같은 Depth 에 있는 서브 그룹 끼리는
+프로젝트 이름 중복이 불가능하다.</li></ul></li></ul></div><div id="f0fc83bc-41ba-43b8-a57f-60814112f9c2" style="width:50%" class="column"><p id="f89db8cc-88c5-4014-9edc-31368c8de9ac" class="">Group Slug </p><ul id="55556b31-939e-4a6e-8994-29c3fbd7cd79" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사<ul id="855b5c89-46f0-4f48-b7c7-6f439fa7750c" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트 Project Slug 텍스트 검사와 동일</li></ul></li></ul><ul id="70ccaaa4-1d08-4603-b62b-cc8667ae4a0f" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="1052c2dd-303c-4723-b552-89d07770ec1b" class="bulleted-list"><li style="list-style-type:circle">상위 그룹 주소와 <code>/</code> 를 포함해서 최대 255글자 </li></ul><ul id="e49c0464-41ce-408e-ae04-f015f9936b0a" class="bulleted-list"><li style="list-style-type:circle">최소 2글자</li></ul></li></ul><ul id="474279a1-786f-489e-9f59-cbcb7d3ca041" class="bulleted-list"><li style="list-style-type:disc">중복 검사 <ul id="6a325f0d-649e-4711-87b6-76d0a6d4fc2f" class="bulleted-list"><li style="list-style-type:circle">대소문자 구분 X
+<code>QWE</code> ≠ <code>qwe</code> 다르다 </li></ul><ul id="19779728-d66f-4916-9c63-126c43f10314" class="bulleted-list"><li style="list-style-type:circle">같은 Depth 에 있는 서브 그룹 끼리는 
+프로젝트 Slug 중복이 불가능하다.</li></ul><ul id="6eac5683-ee89-4dfa-83c4-040ed04b7ab5" class="bulleted-list"><li style="list-style-type:circle">같은 Depth 에 있는 그룹 프로젝트는 
+프로젝트 Slug 중복이 불가능하다.</li></ul></li></ul><p id="7aec8e64-8bbf-4964-a0a4-722e22d114ba" class="">
+</p></div></div><h2 id="310b3b22-bde7-469c-9ab5-9bcf18f502ba" class="">그룹 프로젝트 </h2><hr id="676602bf-07a1-45ed-9d5c-d1738cc82708"/><div id="6648db41-ad0c-44d9-baa8-f34910c48ec3" class="column-list"><div id="98ca3f7d-d773-40ca-8f27-22983c741aee" style="width:50%" class="column"><p id="2a59baa3-03c0-43de-85f6-9215b93fca0f" class="">Project Name</p><ul id="4065ec0e-f24b-4386-baa8-f17ff2543fe5" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사<ul id="02f0f080-8ec5-4d9f-b076-0cbaacf05c50" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트 Project Name 텍스트 검사와 동일</li></ul></li></ul><ul id="10fb5d71-4fba-4889-9a31-3f325a5924ab" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="0845920b-28a6-459a-8934-81b4a79839de" class="bulleted-list"><li style="list-style-type:circle">최대 255글자</li></ul><ul id="20d9a74d-d6f1-476e-a189-ea5c97c1538d" class="bulleted-list"><li style="list-style-type:circle">최소 1글자 </li></ul></li></ul><ul id="1b154af4-0bdd-4ef3-b369-5eadf6432052" class="bulleted-list"><li style="list-style-type:disc">중복 검사<ul id="89dff8ef-355b-47a2-845c-1a3b26e8700f" class="bulleted-list"><li style="list-style-type:circle">대소문자 구분 X
+<code>QWE</code> ≠ <code>qwe</code> 다르다 </li></ul><ul id="5a5cf500-171c-4669-bede-c110074e2e6f" class="bulleted-list"><li style="list-style-type:circle">같은 Depth 에 있는 프로젝트 끼리는 
+프로젝트 이름 중복이 불가능하다.</li></ul></li></ul></div><div id="902f6d2a-5b1b-43af-845e-fe6f6f334e18" style="width:50%" class="column"><p id="6517b1a9-e6c1-4964-b5c2-65fc0ff68232" class="">Project Slug</p><ul id="fb095fe5-8ca5-4628-8d8b-e370fdb3e826" class="bulleted-list"><li style="list-style-type:disc">텍스트 검사<ul id="f5a51e89-7c90-4494-9c69-8a9763650c7a" class="bulleted-list"><li style="list-style-type:circle">최상위 프로젝트 Project Slug 텍스트 검사와 동일</li></ul></li></ul><ul id="28c580d7-42bf-43cd-b453-4ac796c672f5" class="bulleted-list"><li style="list-style-type:disc">길이 검사<ul id="4e8c908c-721c-4d5d-9c74-19c8b4a280c0" class="bulleted-list"><li style="list-style-type:circle">상위 그룹 주소와 <code>/</code> 를 포함해서 최대 255글자 </li></ul><ul id="74fa4127-6cbf-400e-aa3a-8cdcc578ebda" class="bulleted-list"><li style="list-style-type:circle">최소 1글자 </li></ul></li></ul><ul id="8d17231e-89a3-4d8e-8a27-686691a44365" class="bulleted-list"><li style="list-style-type:disc">중복 검사 <ul id="9074af00-87d9-4e68-a7f3-0f3c7697d30f" class="bulleted-list"><li style="list-style-type:circle">서브 그룹 Group Slug 중복 검사와 동일하다.</li></ul><p id="3f487305-0f13-49c0-bd29-8cedc5c339cb" class="">
+</p></li></ul></div></div></div></article></body></html>
