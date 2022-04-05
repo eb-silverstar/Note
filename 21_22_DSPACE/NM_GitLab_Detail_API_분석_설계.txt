@@ -1,0 +1,865 @@
+1. Group Detail
+
+	1-1. Group Info
+	
+		request :
+		GET /api/v4/groups/{groupId}
+
+		response :
+		{
+			"id": 1099,
+			"web_url": "https://gitlab.tbdspace.kt.co.kr/groups/TSNDM00291/TSNDM00292",
+			"name": "TSNDM00292",
+			"path": "TSNDM00292",
+			"description": "",
+			"visibility": "public",
+			"share_with_group_lock": false,
+			"require_two_factor_authentication": false,
+			"two_factor_grace_period": 48,
+			"project_creation_level": "developer",
+			"auto_devops_enabled": null,
+			"subgroup_creation_level": "maintainer",
+			"emails_disabled": null,
+			"mentions_disabled": null,
+			"lfs_enabled": true,
+			"default_branch_protection": 2,
+			"avatar_url": null,
+			"request_access_enabled": true,
+			"full_name": "TSNDM00291 / TSNDM00292",
+			"full_path": "TSNDM00291/TSNDM00292",
+			"created_at": "2022-03-24T01:21:17.593Z",
+			"parent_id": 1098,
+			"ldap_cn": null,
+			"ldap_access": null,
+			"shared_with_groups": [],
+			"runners_token": "hd_ayq2rbH118PAyBC8k",
+			"projects": [],
+			"shared_projects": [],
+			"shared_runners_minutes_limit": null,
+			"extra_shared_runners_minutes_limit": null,
+			"prevent_forking_outside_group": null
+		}
+
+		result :
+		name
+		visibility
+		created_at
+		web_url (바로가기 필요시)
+	
+	
+	
+	1-2. Group Member
+	
+		request :
+		GET /api/v4/groups/{groupId}/members
+		
+		response :
+		[
+			{
+				"id": 17,
+				"name": "노은별 D-Space",
+				"username": "91295158",
+				"state": "active",
+				"avatar_url": "https://secure.gravatar.com/avatar/fb6171981dddfbb8c939621eabec27f8?s=80&d=identicon",
+				"web_url": "https://gitlab.tbdspace.kt.co.kr/91295158",
+				"access_level": 50,
+				"created_at": "2022-03-24T01:21:17.640Z",
+				"expires_at": null
+			}
+		]
+		
+		result : 
+		username -> select name from portal_user where login_id = {username}
+		
+		
+		
+	1-3. Subgroup List
+	프론트와 협의
+	
+	
+	
+	1-4. Subproject List
+	프론트와 협의
+		
+		
+		
+		
+2. Project Detail
+
+	2-1. Project Info
+	
+		request :
+		GET /api/v4/projects/{projectId}
+		
+		response :
+		{
+			"id": 112,
+			"description": "",
+			"name": "TB DSpace Notice",
+			"name_with_namespace": "TB DSpace / TB DSpace Notice",
+			"path": "tb-dspace-notice",
+			"path_with_namespace": "tb-dspace/tb-dspace-notice",
+			"created_at": "2021-09-15T02:16:37.676Z",
+			"default_branch": "master",
+			"tag_list": [],
+			"ssh_url_to_repo": "git@gitlab.tbdspace.kt.co.kr:tb-dspace/tb-dspace-notice.git",
+			"http_url_to_repo": "https://gitlab.tbdspace.kt.co.kr/tb-dspace/tb-dspace-notice.git",
+			"web_url": "https://gitlab.tbdspace.kt.co.kr/tb-dspace/tb-dspace-notice",
+			"readme_url": null,
+			"avatar_url": null,
+			"forks_count": 0,
+			"star_count": 0,
+			"last_activity_at": "2021-11-11T01:10:35.056Z",
+			"namespace": {
+				"id": 120,
+				"name": "TB DSpace",
+				"path": "tb-dspace",
+				"kind": "group",
+				"full_path": "tb-dspace",
+				"parent_id": null,
+				"avatar_url": null,
+				"web_url": "https://gitlab.tbdspace.kt.co.kr/groups/tb-dspace"
+			},
+			"_links": {
+				"self": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112",
+				"issues": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112/issues",
+				"merge_requests": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112/merge_requests",
+				"repo_branches": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112/repository/branches",
+				"labels": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112/labels",
+				"events": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112/events",
+				"members": "https://gitlab.tbdspace.kt.co.kr/api/v4/projects/112/members"
+			},
+			"packages_enabled": true,
+			"empty_repo": false,
+			"archived": false,
+			"visibility": "public",
+			"resolve_outdated_diff_discussions": false,
+			"container_registry_enabled": true,
+			"container_expiration_policy": {
+				"cadence": "1d",
+				"enabled": false,
+				"keep_n": 10,
+				"older_than": "90d",
+				"name_regex": ".*",
+				"name_regex_keep": null,
+				"next_run_at": "2021-09-16T02:16:37.754Z"
+			},
+			"issues_enabled": true,
+			"merge_requests_enabled": true,
+			"wiki_enabled": true,
+			"jobs_enabled": true,
+			"snippets_enabled": true,
+			"service_desk_enabled": false,
+			"service_desk_address": null,
+			"can_create_merge_request_in": true,
+			"issues_access_level": "enabled",
+			"repository_access_level": "enabled",
+			"merge_requests_access_level": "enabled",
+			"forking_access_level": "enabled",
+			"wiki_access_level": "enabled",
+			"builds_access_level": "enabled",
+			"snippets_access_level": "enabled",
+			"pages_access_level": "enabled",
+			"operations_access_level": "enabled",
+			"analytics_access_level": "enabled",
+			"emails_disabled": null,
+			"shared_runners_enabled": true,
+			"lfs_enabled": true,
+			"creator_id": 9,
+			"import_status": "none",
+			"import_error": null,
+			"open_issues_count": 0,
+			"runners_token": "X3QY1dmvSfgyMpZs5UqN",
+			"ci_default_git_depth": 50,
+			"ci_forward_deployment_enabled": true,
+			"public_jobs": true,
+			"build_git_strategy": "fetch",
+			"build_timeout": 3600,
+			"auto_cancel_pending_pipelines": "enabled",
+			"build_coverage_regex": null,
+			"ci_config_path": null,
+			"shared_with_groups": [],
+			"only_allow_merge_if_pipeline_succeeds": false,
+			"allow_merge_on_skipped_pipeline": null,
+			"restrict_user_defined_variables": false,
+			"request_access_enabled": true,
+			"only_allow_merge_if_all_discussions_are_resolved": false,
+			"remove_source_branch_after_merge": true,
+			"printing_merge_request_link_enabled": true,
+			"merge_method": "merge",
+			"suggestion_commit_message": null,
+			"auto_devops_enabled": true,
+			"auto_devops_deploy_strategy": "continuous",
+			"autoclose_referenced_issues": true,
+			"repository_storage": "storage1",
+			"requirements_enabled": null,
+			"security_and_compliance_enabled": true,
+			"compliance_frameworks": [],
+			"permissions": {
+				"project_access": {
+					"access_level": 40,
+					"notification_level": 3
+				},
+				"group_access": null
+			}
+		}
+		
+		result :
+		name
+		visibility
+		created_at
+		web_url (바로가기 필요시)
+		
+	
+	
+	2-2. Project Member
+	
+		request :
+		GET /api/v4/projects/{projectId}/members
+		
+		response :
+		[
+			{
+				"id": 17,
+				"name": "노은별 D-Space",
+				"username": "91295158",
+				"state": "active",
+				"avatar_url": "https://secure.gravatar.com/avatar/fb6171981dddfbb8c939621eabec27f8?s=80&d=identicon",
+				"web_url": "https://gitlab.tbdspace.kt.co.kr/91295158",
+				"access_level": 40,
+				"created_at": "2022-03-04T00:16:42.935Z",
+				"expires_at": null
+			}
+		]
+		
+		result :
+		username -> select name from portal_user where login_id = {username}
+		
+	
+	
+	2-3. Statistics
+	
+		2-3-1. Commit, Storage, Repository
+		
+			request :
+			/api/v4/projects/{projectId}?statistics=true
+			
+			response :
+			{
+				"id": 117,
+				"description": "전사 DevSecOps 개발 프로젝트 - CI BackEnd",
+				"name": "DSpace CI BackEnd",
+				"name_with_namespace": "Developer Space / DSpace CI BackEnd",
+				"path": "d-space-portal",
+				"path_with_namespace": "DS/d-space-portal",
+				"created_at": "2021-06-28T04:14:19.417Z",
+				"default_branch": "dev",
+				"tag_list": [],
+				"ssh_url_to_repo": "git@gitlab.dspace.kt.co.kr:DS/d-space-portal.git",
+				"http_url_to_repo": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal.git",
+				"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal",
+				"readme_url": null,
+				"avatar_url": null,
+				"forks_count": 0,
+				"star_count": 0,
+				"last_activity_at": "2022-04-04T06:20:29.943Z",
+				"namespace": {
+					"id": 54,
+					"name": "Developer Space",
+					"path": "DS",
+					"kind": "group",
+					"full_path": "DS",
+					"parent_id": null,
+					"avatar_url": null,
+					"web_url": "https://gitlab.dspace.kt.co.kr/groups/DS"
+				},
+				"_links": {
+					"self": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117",
+					"issues": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117/issues",
+					"merge_requests": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117/merge_requests",
+					"repo_branches": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117/repository/branches",
+					"labels": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117/labels",
+					"events": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117/events",
+					"members": "https://gitlab.dspace.kt.co.kr/api/v4/projects/117/members"
+				},
+				"packages_enabled": true,
+				"empty_repo": false,
+				"archived": false,
+				"visibility": "internal",
+				"resolve_outdated_diff_discussions": false,
+				"container_registry_enabled": true,
+				"container_expiration_policy": {
+					"cadence": "1d",
+					"enabled": false,
+					"keep_n": 10,
+					"older_than": "90d",
+					"name_regex": ".*",
+					"name_regex_keep": null,
+					"next_run_at": "2021-06-29T04:14:54.910Z"
+				},
+				"issues_enabled": true,
+				"merge_requests_enabled": true,
+				"wiki_enabled": true,
+				"jobs_enabled": true,
+				"snippets_enabled": true,
+				"service_desk_enabled": false,
+				"service_desk_address": null,
+				"can_create_merge_request_in": true,
+				"issues_access_level": "enabled",
+				"repository_access_level": "enabled",
+				"merge_requests_access_level": "enabled",
+				"forking_access_level": "enabled",
+				"wiki_access_level": "enabled",
+				"builds_access_level": "enabled",
+				"snippets_access_level": "enabled",
+				"pages_access_level": "private",
+				"operations_access_level": "enabled",
+				"analytics_access_level": "enabled",
+				"emails_disabled": false,
+				"shared_runners_enabled": true,
+				"lfs_enabled": true,
+				"creator_id": 1,
+				"import_status": "finished",
+				"import_error": null,
+				"open_issues_count": 0,
+				"runners_token": "k2W8T7zsdWVi4X3VUszz",
+				"ci_default_git_depth": 50,
+				"ci_forward_deployment_enabled": true,
+				"public_jobs": true,
+				"build_git_strategy": "fetch",
+				"build_timeout": 3600,
+				"auto_cancel_pending_pipelines": "enabled",
+				"build_coverage_regex": null,
+				"ci_config_path": null,
+				"shared_with_groups": [],
+				"only_allow_merge_if_pipeline_succeeds": false,
+				"allow_merge_on_skipped_pipeline": null,
+				"restrict_user_defined_variables": false,
+				"request_access_enabled": true,
+				"only_allow_merge_if_all_discussions_are_resolved": false,
+				"remove_source_branch_after_merge": true,
+				"printing_merge_request_link_enabled": true,
+				"merge_method": "merge",
+				"suggestion_commit_message": null,
+				"statistics": {
+					"commit_count": 934,
+					"storage_size": 8178892,
+					"repository_size": 8032092,
+					"wiki_size": 146800,
+					"lfs_objects_size": 0,
+					"job_artifacts_size": 0,
+					"snippets_size": 0,
+					"packages_size": 0
+				},
+				"auto_devops_enabled": false,
+				"auto_devops_deploy_strategy": "continuous",
+				"autoclose_referenced_issues": true,
+				"repository_storage": "storage1",
+				"requirements_enabled": null,
+				"security_and_compliance_enabled": true,
+				"compliance_frameworks": [],
+				"permissions": {
+					"project_access": {
+						"access_level": 40,
+						"notification_level": 3
+					},
+					"group_access": null
+				}
+			}
+			
+			result :
+			statistics[commit_count,storage_size,repository_size]
+			
+			
+			
+		2-3-2. Releases
+		
+			request :
+			GET /api/v4/projects/{projectId}/releases
+			
+			response :
+			[
+				{
+					"name": "ITO_v1.0.0",
+					"tag_name": "ITO_v1.0.0",
+					"description": "- [DSITO-361] Portal Projects 전체 리스트 가지고 오는 API 개발\n- [DSITO-362] Portal Project Detail 정보에 프로젝트 생성자 정보 추가",
+					"created_at": "2022-03-31T04:47:12.346Z",
+					"released_at": "2022-03-31T04:47:12.346Z",
+					"author": {
+						"id": 346,
+						"name": "노은별 (KT협력사)",
+						"username": "91295158",
+						"state": "active",
+						"avatar_url": null,
+						"web_url": "https://gitlab.dspace.kt.co.kr/91295158"
+					},
+					"commit": {
+						"id": "fb787b955087a8b720bfc9fa1378aa3fe7879cbf",
+						"short_id": "fb787b95",
+						"created_at": "2022-03-31T13:39:32.000+09:00",
+						"parent_ids": [
+							"b5711f447ef375c89a979c60431612deb8e864de",
+							"d438812d8a09b32a6849dbb59640587ea532786e"
+						],
+						"title": "Merge branch 'dev' into staging",
+						"message": "Merge branch 'dev' into staging",
+						"author_name": "노은별 (KT협력사)",
+						"author_email": "91295158@ktfriend.com",
+						"authored_date": "2022-03-31T13:39:32.000+09:00",
+						"committer_name": "노은별 (KT협력사)",
+						"committer_email": "91295158@ktfriend.com",
+						"committed_date": "2022-03-31T13:39:32.000+09:00",
+						"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/fb787b955087a8b720bfc9fa1378aa3fe7879cbf"
+					},
+					"upcoming_release": false,
+					"commit_path": "/DS/d-space-portal/-/commit/fb787b955087a8b720bfc9fa1378aa3fe7879cbf",
+					"tag_path": "/DS/d-space-portal/-/tags/ITO_v1.0.0",
+					"assets": {
+						"count": 4,
+						"sources": [
+							{
+								"format": "zip",
+								"url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/archive/ITO_v1.0.0/d-space-portal-ITO_v1.0.0.zip"
+							},
+							{
+								"format": "tar.gz",
+								"url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/archive/ITO_v1.0.0/d-space-portal-ITO_v1.0.0.tar.gz"
+							},
+							{
+								"format": "tar.bz2",
+								"url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/archive/ITO_v1.0.0/d-space-portal-ITO_v1.0.0.tar.bz2"
+							},
+							{
+								"format": "tar",
+								"url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/archive/ITO_v1.0.0/d-space-portal-ITO_v1.0.0.tar"
+							}
+						],
+						"links": []
+					},
+					"evidences": [
+						{
+							"sha": "e35be04191dad28915294b523bff3c97a9a051a3264d",
+							"filepath": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/releases/ITO_v1.0.0/evidences/156.json",
+							"collected_at": "2022-03-31T04:47:12.525Z"
+						}
+					],
+					"_links": {
+						"self": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/releases/ITO_v1.0.0",
+						"edit_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/releases/ITO_v1.0.0/edit"
+					}
+				}
+			]
+			
+		
+		
+		2-3-3. Tag
+		
+		request :
+		GET /api/v4/projects/{projectId}/repository/tags
+		
+		response :
+		[
+			{
+				"name": "ITO_v1.0.0",
+				"message": "- [DSITO-361] Portal Projects 전체 리스트 가지고 오는 API 개발\n- [DSITO-362] Portal Project Detail 정보에 프로젝트 생성자 정보 추가",
+				"target": "40cb11df76ac8549547fe2f4b67a8b8e151b20b9",
+				"commit": {
+					"id": "fb787b955087a8b720bfc9fa1378aa3fe7879cbf",
+					"short_id": "fb787b95",
+					"created_at": "2022-03-31T13:39:32.000+09:00",
+					"parent_ids": [
+						"b5711f447ef375c89a979c60431612deb8e864de",
+						"d438812d8a09b32a6849dbb59640587ea532786e"
+					],
+					"title": "Merge branch 'dev' into staging",
+					"message": "Merge branch 'dev' into staging",
+					"author_name": "노은별 (KT협력사)",
+					"author_email": "91295158@ktfriend.com",
+					"authored_date": "2022-03-31T13:39:32.000+09:00",
+					"committer_name": "노은별 (KT협력사)",
+					"committer_email": "91295158@ktfriend.com",
+					"committed_date": "2022-03-31T13:39:32.000+09:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/fb787b955087a8b720bfc9fa1378aa3fe7879cbf"
+				},
+				"release": {
+					"tag_name": "ITO_v1.0.0",
+					"description": "- [DSITO-361] Portal Projects 전체 리스트 가지고 오는 API 개발\n- [DSITO-362] Portal Project Detail 정보에 프로젝트 생성자 정보 추가"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.12",
+				"message": "",
+				"target": "13b8d7de8d5dbf70ef20b020b3cb9caa28bee94b",
+				"commit": {
+					"id": "13b8d7de8d5dbf70ef20b020b3cb9caa28bee94b",
+					"short_id": "13b8d7de",
+					"created_at": "2021-12-03T09:27:32.000+09:00",
+					"parent_ids": [
+						"f4653b9980a5d0fa5bce42d686a047ba814f61a0"
+					],
+					"title": "[DSP-1727] 마이페이지 Jenkins Job Template 정상 출력 되도록 수정",
+					"message": "[DSP-1727] 마이페이지 Jenkins Job Template 정상 출력 되도록 수정",
+					"author_name": "노은별",
+					"author_email": "91295158@ktfriend.com",
+					"authored_date": "2021-12-03T09:27:32.000+09:00",
+					"committer_name": "노은별",
+					"committer_email": "91295158@ktfriend.com",
+					"committed_date": "2021-12-03T09:27:32.000+09:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/13b8d7de8d5dbf70ef20b020b3cb9caa28bee94b"
+				},
+				"release": {
+					"tag_name": "v1.0.12",
+					"description": "CI/CD Portal\n- [DSP-1709]CD Jenkins 비활성화 상태 오류 - 수정\n- [DSP-1750]Jira 프로젝트 명 한글로 작성 가능하도록 수정 요청"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.11",
+				"message": "- DSP-820/DSP-794 Sparrow 분석 결과 조치\r\n- DSP-849 URL 직접 호출 방지 설정 추가\r\n- DSP-883 프로젝트 삭제 후 같은 JIRA 명칭 재생성시 에러 메시지 변경\r\n- DSP-896 Sparrow 차트 분석 API 변경\r\n- DSP-901/DSP-993 Migration > JIRA 목록 조회 수정\r\n- DSP-933 프로젝트 상세 CI Jenkins 데이터에 마지막 빌드 일자 추가\r\n- DSP-943 관리자 기능(프로젝트, 유저 전체 목록)\r\n- DSP-970 프로젝트 수정에서 CD Jenkins를 수정 완료 후 프로젝트 수정 화면을 다시 들어가면 500에러 발생\r\n- DSP-977 CI Jenkins 생성 안되는 bugfix  \r\n- DSP-772 통계 차원 테이블 집계 기능 제작\r\n- application.yaml 속성 prod 로 변경",
+				"target": "ddec41265f5dcc9139a8e86a9a491cbf544eeecf",
+				"commit": {
+					"id": "77b2d279502465edd2b52cd519aad88f7f3395bd",
+					"short_id": "77b2d279",
+					"created_at": "2021-08-30T18:14:31.000+09:00",
+					"parent_ids": [
+						"2503e462b1cf0c21899065dc124ab010bd3fd858"
+					],
+					"title": "DSP-984 대응",
+					"message": "DSP-984 대응\n",
+					"author_name": "91279337",
+					"author_email": "91279337@ktfriend.com",
+					"authored_date": "2021-08-30T18:14:31.000+09:00",
+					"committer_name": "91279337",
+					"committer_email": "91279337@ktfriend.com",
+					"committed_date": "2021-08-30T18:14:31.000+09:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/77b2d279502465edd2b52cd519aad88f7f3395bd"
+				},
+				"release": {
+					"tag_name": "v1.0.11",
+					"description": "- application.yaml 속성 prod 로 변경\r\n\r\n- DSP-820/DSP-794 Sparrow 분석 결과 조치\r\n- DSP-849 URL 직접 호출 방지 설정 추가\r\n- DSP-883 프로젝트 삭제 후 같은 JIRA 명칭 재생성시 에러 메시지 변경\r\n- DSP-896 Sparrow 차트 분석 API 변경\r\n- DSP-901/DSP-993 Migration > JIRA 목록 조회 수정\r\n- DSP-933 프로젝트 상세 CI Jenkins 데이터에 마지막 빌드 일자 추가\r\n- DSP-943 관리자 기능(프로젝트, 유저 전체 목록)\r\n- DSP-970 프로젝트 수정에서 CD Jenkins를 수정 완료 후 프로젝트 수정 화면을 다시 들어가면 500에러 발생\r\n- DSP-977 CI Jenkins 생성 안되는 bugfix  \r\n- DSP-772 통계 차원 테이블 집계 기능 제작"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.10",
+				"message": "",
+				"target": "2b8e6b975d6a0b78939898cfd4f2277e61c0f53e",
+				"commit": {
+					"id": "2b8e6b975d6a0b78939898cfd4f2277e61c0f53e",
+					"short_id": "2b8e6b97",
+					"created_at": "2021-08-30T09:04:50.000+00:00",
+					"parent_ids": [
+						"a78794e254a5bdc4b84bf36571bd672b8116d429",
+						"2503e462b1cf0c21899065dc124ab010bd3fd858"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nDev\n\nSee merge request DS/d-space-portal!118",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-08-30T09:04:50.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-08-30T09:04:50.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/2b8e6b975d6a0b78939898cfd4f2277e61c0f53e"
+				},
+				"release": {
+					"tag_name": "v1.0.10",
+					"description": "- DSP-820/DSP-794 Sparrow 분석 결과 조치\r\n- DSP-849 URL 직접 호출 방지 설정 추가\r\n- DSP-883 프로젝트 삭제 후 같은 JIRA 명칭 재생성시 에러 메시지 변경\r\n- DSP-896 Sparrow 차트 분석 API 변경\r\n- DSP-901/DSP-993 Migration > JIRA 목록 조회 수정\r\n- DSP-933 프로젝트 상세 CI Jenkins 데이터에 마지막 빌드 일자 추가\r\n- DSP-943 관리자 기능(프로젝트, 유저 전체 목록)\r\n- DSP-970 프로젝트 수정에서 CD Jenkins를 수정 완료 후 프로젝트 수정 화면을 다시 들어가면 500에러 발생\r\n- DSP-977 CI Jenkins 생성 안되는 bugfix  \r\n- DSP-772 통계 차원 테이블 집계 기능 제작"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.9",
+				"message": "DB 컬렴 현행화 반영.",
+				"target": "6fd9027e28d3e81e8f1b71694e208244545661be",
+				"commit": {
+					"id": "a78794e254a5bdc4b84bf36571bd672b8116d429",
+					"short_id": "a78794e2",
+					"created_at": "2021-08-18T10:55:42.000+09:00",
+					"parent_ids": [
+						"e3eb3edf29288906048dcbe0d98044913fc7f56a"
+					],
+					"title": "[DSP-850]CI BackEnd 로컬 개발환경 설정 변경(DB 현행화에 따른)",
+					"message": "[DSP-850]CI BackEnd 로컬 개발환경 설정 변경(DB 현행화에 따른)",
+					"author_name": "조성옥",
+					"author_email": "91284781@ktfriend.com",
+					"authored_date": "2021-08-18T10:55:42.000+09:00",
+					"committer_name": "조성옥",
+					"committer_email": "91284781@ktfriend.com",
+					"committed_date": "2021-08-18T10:55:42.000+09:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/a78794e254a5bdc4b84bf36571bd672b8116d429"
+				},
+				"release": {
+					"tag_name": "v1.0.9",
+					"description": "DB 컬렴 현행화 반영.\r\n\r\ndev1 branch to master"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.8",
+				"message": "Git 연동 privatetoken 으로 재변경 및 visibility 옵션 추가, Jenkins API 2종 추가",
+				"target": "9b86f4504c1cdb4ec6d86878c84f4a75890517d2",
+				"commit": {
+					"id": "70cad56804c6947b737bb5b31bfdff46860928ee",
+					"short_id": "70cad568",
+					"created_at": "2021-08-03T10:00:20.000+00:00",
+					"parent_ids": [
+						"4bb6be2772468c223b15f41caf2703bbe8d90306",
+						"baeafa102896762452082ac3151c902fabd31900"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nGit 연동 privatetoken 으로 재변경, visibility 옵션 추가 / jenkins 빌드 관련 Rest API 2건 추가\n\nSee merge request DS/d-space-portal!109",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-08-03T10:00:20.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-08-03T10:00:20.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/70cad56804c6947b737bb5b31bfdff46860928ee"
+				},
+				"release": {
+					"tag_name": "v1.0.8",
+					"description": "- Git 연동 privatetoken 으로 재변경 및 visibility=private option 추가\r\n- Jenkins 특정 Folder내 특정 Job에 대한 빌드 정보 목록 조회\r\n- Jenkins 특정 Folder내 특정 Job의 특정 빌드건의 빌드 결과 조회"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.7",
+				"message": "Git 연동 admintoken 연동 방식으로 변경 외 3개건",
+				"target": "ec249a90c57ca45abaaed55e97fc65c66ba2238c",
+				"commit": {
+					"id": "4bb6be2772468c223b15f41caf2703bbe8d90306",
+					"short_id": "4bb6be27",
+					"created_at": "2021-08-03T09:07:03.000+00:00",
+					"parent_ids": [
+						"e31434c98bf34e8a5d0eeed29f279539b1c0e188",
+						"823cf931f24e4d5432dbd1f486754e55d7ae31c7"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nGit 연동 admintoken 연동 방식으로 변경 외 3개 수정\n\nSee merge request DS/d-space-portal!108",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-08-03T09:07:03.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-08-03T09:07:03.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/4bb6be2772468c223b15f41caf2703bbe8d90306"
+				},
+				"release": {
+					"tag_name": "v1.0.7",
+					"description": "- DSP-676 Git 연동 admintoken 연동 방식으로 변경\r\n- DSP-473 Migration Git Project 목록 Sorting\r\n- DSP-659 프로젝트 상세 정보 Jira API Statistics 정보 추가 요청\r\n- DSP-671 프로젝트상세/MyPage > Jira 이슈 목록 조회 output에 issuetype 포함\r\n- DSP-650 프로젝트 생성시 인증 방식 변경 (Git/Jenkins 입력값이 있을 경우만 Tool 접속여부 Check)"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.6",
+				"message": "CodeEyes, Sparrow API 추가",
+				"target": "5d97045254efe0b566e355774ba8169dde506a3d",
+				"commit": {
+					"id": "133916288256842227e57559d54fc85b85d5d52d",
+					"short_id": "13391628",
+					"created_at": "2021-07-27T23:16:25.000+00:00",
+					"parent_ids": [
+						"416135d216eb52b76b5eb3ecb8ed390432b053c2",
+						"8eddf8a5e924e6967984734c6b4cf1e3486a8965"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nDev\n\nSee merge request DS/d-space-portal!107",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-27T23:16:25.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-27T23:16:25.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/133916288256842227e57559d54fc85b85d5d52d"
+				},
+				"release": {
+					"tag_name": "v1.0.6",
+					"description": "DSP-85  CodeEyes 진단 요청 및 결과 (Backend) - 소스코드 검증 결과 (파일별 룰 준수율) - REST API 개발\r\nDSP-322 CodeEyes 진단 요청 및 결과 (Backend) - 소스코드 검증 결과 (Priority별 위반 건) - REST API 개발\r\nDSP-86    Sparrow 진단 결과 (Backend) - 등록, 삭제, 수정 기능 (개발)\r\nDSP-131    Sparrow 진단 결과 (Backend) - 프로젝트 목록 조회 기능 (개발)\r\nDSP-133    Sparrow 진단 결과 (Backend) - 최근 분석 리스트 (테이블 정보취득 : REST API 개발)\r\nDSP-134    Sparrow 진단 결과 (Backend) - 이슈 추이 차트 (REST API 개발)\r\nDSP-332    Sparrow 진단 결과 (Backend) - 프로젝트 목록 조회 기능 (사양변경에 의한 재구성)\r\nDSP-418    Sparrow 진단 결과 (Backend) - Sparrow 프로젝트 목록 DB저장 (Batch 기능구현)"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.5",
+				"message": "테이블 전체 업데이트 되지 않도록 임시 조치",
+				"target": "b75ef07042f74314c8ee96bb101cde5d20302311",
+				"commit": {
+					"id": "416135d216eb52b76b5eb3ecb8ed390432b053c2",
+					"short_id": "416135d2",
+					"created_at": "2021-07-23T09:03:04.000+00:00",
+					"parent_ids": [
+						"1aef3eb0fc93796ca300a20f1a36dc535cbf8dd3",
+						"2d3b9d642d99d528c647a5f86e9ca8f56283c601"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\n조건절 key 가 null 인경우 git_lab_project 테이블 전체 업데이트 되지 않도록 긴습 수정\n\nSee merge request DS/d-space-portal!105",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-23T09:03:04.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-23T09:03:04.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/416135d216eb52b76b5eb3ecb8ed390432b053c2"
+				},
+				"release": {
+					"tag_name": "v1.0.5",
+					"description": "조건절 key 값이 null 인 경우 에도 프로세스 진행되어 테이블 전체 update 되지 않도록 긴급조치"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.4",
+				"message": "Git ProjectID 없는 경우 예외처리, Jira admintoken 변경, Tool 연동 URL http->https 변경",
+				"target": "5fb6b97da5c923eca6a0d3207088095f8d5cc730",
+				"commit": {
+					"id": "1aef3eb0fc93796ca300a20f1a36dc535cbf8dd3",
+					"short_id": "1aef3eb0",
+					"created_at": "2021-07-22T09:53:33.000+00:00",
+					"parent_ids": [
+						"fbc6ea27e50f8b56ec6d3b5aa62a2010036361c2",
+						"43266aa02ec2310a9c89602a879454263d3bd361"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nDev\n\nSee merge request DS/d-space-portal!104",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-22T09:53:33.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-22T09:53:33.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/1aef3eb0fc93796ca300a20f1a36dc535cbf8dd3"
+				},
+				"release": {
+					"tag_name": "v1.0.4",
+					"description": "- Git ProjectID 없는 경우 예외처리\r\n- Jira admintoken 변경\r\n- Tool 연동 URL http->https 변경"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.3",
+				"message": "Migration 대응 변경, My Page 개발",
+				"target": "6c6c0bd6e8ff2263693eb41dcee630425548ded7",
+				"commit": {
+					"id": "fbc6ea27e50f8b56ec6d3b5aa62a2010036361c2",
+					"short_id": "fbc6ea27",
+					"created_at": "2021-07-22T08:53:09.000+00:00",
+					"parent_ids": [
+						"dd0fb245c6540d9b62f95eaada556d92caad501b",
+						"3f5c984ec45a2ee48088aab997380cfc5c2129ca"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nDev\n\nSee merge request DS/d-space-portal!103",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-22T08:53:09.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-22T08:53:09.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/fbc6ea27e50f8b56ec6d3b5aa62a2010036361c2"
+				},
+				"release": {
+					"tag_name": "v1.0.3",
+					"description": "- DSP-386 [Migration] UI에 Git 프로젝트 목록 조회시 포털의 ProjectID 도 같이 전달\r\n- DSP-402 [Migration] DSpace내의 portal 하위 프로젝트의 정보를 변경하는 API 구현\r\n- DSP-367 [MyPage] MyPage > 로그인 사용자가 Assignee 로 되어 있는 Jira Issue 목록 조회 API 개발\r\n- DSP-378 [MyPage] MyPage > 로그인 사용자가 Commit한 Git 목록 조회 API 개발\r\n- DSP-391 [MyPage] MyPage > Jenkins Job Build 목록 조회 API 개발\r\n- DSP-176 [CD포털 개발] 프로젝트 생성/수정 완료 후 UI 에 projectId 전달"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.2",
+				"message": "500 서버 오류  대응.",
+				"target": "32bd825484e18503bac43445d52522db4ad6c9bb",
+				"commit": {
+					"id": "dd0fb245c6540d9b62f95eaada556d92caad501b",
+					"short_id": "dd0fb245",
+					"created_at": "2021-07-14T09:16:43.000+00:00",
+					"parent_ids": [
+						"9ff91c8019db6093ac79067e010b634dbf777cb9",
+						"e17532424186f4b3e7080837ab0322d9e785ade1"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nDev\n\nSee merge request DS/d-space-portal!100",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-14T09:16:43.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-14T09:16:43.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/dd0fb245c6540d9b62f95eaada556d92caad501b"
+				},
+				"release": {
+					"tag_name": "v1.0.2",
+					"description": "- DSP-207 포털 로그인 후 각 툴의 로그인 체크시 500에러 발생 (툴 접속장애) 대응\r\n- DSP-223 DSpace Exist API 500에러 발생 대응\r\n- DSP-235 Jenkins 빌드중 status 추가\r\n- DSP-327 프로젝트/그룹 생성/수정 전 Tool 별 접속여부 Validation Check\r\n- DSP-351 RoleService 동일 프로젝트Slug 조회 500 에러 대응"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.1",
+				"message": "서버 에러 핸들링 수정\r\nJira 정보 관리 변경, 키 신규 발급",
+				"target": "a2166ea16223f372f89135c16923046247c04a7f",
+				"commit": {
+					"id": "9ff91c8019db6093ac79067e010b634dbf777cb9",
+					"short_id": "9ff91c80",
+					"created_at": "2021-07-12T09:01:27.000+00:00",
+					"parent_ids": [
+						"cdb4a563bad05a35d7337e7d364b6ce0baaecdbc",
+						"e11eb902badbc42f3950761591189cce1e45fb3a"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\nDev\n\nSee merge request DS/d-space-portal!99",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-12T09:01:27.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-12T09:01:27.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/9ff91c8019db6093ac79067e010b634dbf777cb9"
+				},
+				"release": {
+					"tag_name": "v1.0.1",
+					"description": "* HttpClientErrorException, HttpServerErrorException 에러 메시지 처리\r\n* Jira Rest API 접속 계정 config로 세팅\r\n* Jira API Key 신규 발급 및 세팅"
+				},
+				"protected": false
+			},
+			{
+				"name": "v1.0.0",
+				"message": "Dspace CI  최초 릴리즈",
+				"target": "df59af0cbf6298fa2dd4c97cced2cdc35cf04011",
+				"commit": {
+					"id": "cdb4a563bad05a35d7337e7d364b6ce0baaecdbc",
+					"short_id": "cdb4a563",
+					"created_at": "2021-07-01T09:04:58.000+00:00",
+					"parent_ids": [
+						"0349f3ce697ce201d40aaa6595a5590ee65bf90c",
+						"32076a7297eb91673a1c1e48a892f5bdb8dfdea4"
+					],
+					"title": "Merge branch 'dev' into 'master'",
+					"message": "Merge branch 'dev' into 'master'\n\n프로젝트 상세 조회 개선 확인을 위한 roleService 주석처리\n\nSee merge request DS/d-space-portal!98",
+					"author_name": "장안태 D-Space BackEnd Develop",
+					"author_email": "91284893@ktfriend.com",
+					"authored_date": "2021-07-01T09:04:58.000+00:00",
+					"committer_name": "장안태 D-Space BackEnd Develop",
+					"committer_email": "91284893@ktfriend.com",
+					"committed_date": "2021-07-01T09:04:58.000+00:00",
+					"web_url": "https://gitlab.dspace.kt.co.kr/DS/d-space-portal/-/commit/cdb4a563bad05a35d7337e7d364b6ce0baaecdbc"
+				},
+				"release": {
+					"tag_name": "v1.0.0",
+					"description": "Dspace CI  최초 릴리즈"
+				},
+				"protected": false
+			}
+		]
+		
+	
+	
+	
+	2-4. Project Languages
+	
+		request :
+		GET /api/v4/projects/{projectId}/languages
+		
+		response :
+		{
+			"Java": 99.64,
+			"HTML": 0.36
+		}
