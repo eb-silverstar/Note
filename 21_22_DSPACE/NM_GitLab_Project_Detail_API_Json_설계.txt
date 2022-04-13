@@ -1,0 +1,34 @@
+1. request
+
+GET /ndm/git/project/{gitProjectId}
+
+
+
+2. response
+
+{
+	"gitProjectId": 0,
+	"gitProjectName": "",
+	"visibility": "",
+	"created_date": "",
+	"web_url": "",
+	"members": [
+		{
+			"loginId": "",
+			"name": ""
+		}
+	],
+	"statistics" : {
+		"commit_count": 0,
+		"storage_size": 0,
+		"repository_size": 0,
+		"tag_count": 0,
+		"release_count": 0
+	},
+	"languages" : {
+		"Java": 99.64,
+		"HTML": 0.36
+	}
+}
+
+※ languages 값은 가변적임

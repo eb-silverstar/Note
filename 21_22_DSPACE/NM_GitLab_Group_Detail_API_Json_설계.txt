@@ -1,0 +1,21 @@
+1. request
+
+GET /ndm/git/group/{gitGroupId}
+
+
+
+2. response
+
+{
+	"gitGroupId": 0,
+	"gitGroupName": "",
+	"visibility": "",
+	"created_date": "",
+	"web_url": "",
+	"members": [
+		{
+			"loginId": "",
+			"name": ""
+		}
+	]
+}
