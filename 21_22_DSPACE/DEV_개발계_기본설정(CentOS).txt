@@ -1,9 +1,9 @@
-1.java jdk ¼³Ä¡(openJDK 1.8.0 ÀÌ»ó ¼³Ä¡)
-yum list java*jdk-devel     <== ÆĞÅ°Áö ¹öÀü È®ÀÎ , ÆĞÅ°Áö¸í ³¡¿¡ develÀÌ¶ó°í ³¡³ª¸é JDK ¾Æ´Ï¸é, JRE¸¦ ÀÇ¹ÌÇÔ.
+1.java jdk ì„¤ì¹˜(openJDK 1.8.0 ì´ìƒ ì„¤ì¹˜)
+yum list java*jdk-devel     <== íŒ¨í‚¤ì§€ ë²„ì „ í™•ì¸ , íŒ¨í‚¤ì§€ëª… ëì— develì´ë¼ê³  ëë‚˜ë©´ JDK ì•„ë‹ˆë©´, JREë¥¼ ì˜ë¯¸í•¨.
 
 yum -y install java-1.8.0-openjdk-devel.x86_64
 
-    1.1. ¼³Ä¡µÈ JDK °æ·Î È®ÀÎ
+    1.1. ì„¤ì¹˜ëœ JDK ê²½ë¡œ í™•ì¸
     [root@localhost firewalld]# which java
     /bin/java
     [root@localhost firewalld]# ls -alhtr /bin/java
@@ -11,31 +11,31 @@ yum -y install java-1.8.0-openjdk-devel.x86_64
     [root@localhost firewalld]# ls -alhtr /etc/alternatives/java
     lrwxrwxrwx. 1 root root 73 Sep  4 22:13 /etc/alternatives/java -> /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64/jre/bin/java
 
-2.java °æ·Î ¼³Á¤ ,ÅèÄ¹ °æ·Î ¼³Á¤
+2.java ê²½ë¡œ ì„¤ì • ,í†°ìº£ ê²½ë¡œ ì„¤ì •
 vi /etc/profile
 export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64/
 export CATALINA_HOME=/tomcat
 export PATH=$JAVA_HOME/bin:$CATALINA_HOME/bin:$PATH
 
-ÂüÁ¶ : CentOS 7.2 ¿¡¼­ yumÀ¸·Î tomcatÀ» ¼³Ä¡ÇÏ¸é tomcat 7 ÀÌ ¼³Ä¡µÈ´Ù. ÇöÀç tomcatÀº 9¹öÀü ÀÌ ÃÖ½Å ¹öÀüÀÌ°í ÀÌ¸¦ ¼³Ä¡ÇÏ·Á¸é ¾Æ·¡¿Í °°ÀÌ ÁøÇàÇÏ¸é µÈ´Ù.
-       (±×·¡¼­ yum »ç¿ëÇÏÁö ¾Ê°í ¼öµ¿¼³Ä¡ÇÔ.)
+ì°¸ì¡° : CentOS 7.2 ì—ì„œ yumìœ¼ë¡œ tomcatì„ ì„¤ì¹˜í•˜ë©´ tomcat 7 ì´ ì„¤ì¹˜ëœë‹¤. í˜„ì¬ tomcatì€ 9ë²„ì „ ì´ ìµœì‹  ë²„ì „ì´ê³  ì´ë¥¼ ì„¤ì¹˜í•˜ë ¤ë©´ ì•„ë˜ì™€ ê°™ì´ ì§„í–‰í•˜ë©´ ëœë‹¤.
+       (ê·¸ë˜ì„œ yum ì‚¬ìš©í•˜ì§€ ì•Šê³  ìˆ˜ë™ì„¤ì¹˜í•¨.)
 
-3.ÅèÄ¹ ¼³Ä¡
+3.í†°ìº£ ì„¤ì¹˜
 cd /inusquare_doc/environment
 tar xvzpf apache-tomcat-9.0.22.tar.gz
 mv apache-tomcat-9.0.52 /tomcat
 
-3.1. IPv4(tcp) tomcat start  - tomcat¼³Ä¡Æú´õÀÇ binÆú´õÀÇ catalina.sh ÆíÁı(¾Æ·¡³»¿ë Ãß°¡)
+3.1. IPv4(tcp) tomcat start  - tomcatì„¤ì¹˜í´ë”ì˜ biní´ë”ì˜ catalina.sh í¸ì§‘(ì•„ë˜ë‚´ìš© ì¶”ê°€)
 # IPv4(tcp) tomcat start
 JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"
 
-4.ÅèÄ¹,nginx ±ÇÇÑ¼³Á¤ - user¿Í group »ı¼ºÇÏ°í, tomcat È­ÀÏÀÇ ¼ÒÀ¯±Ç º¯°æÇÑ´Ù.
+4.í†°ìº£,nginx ê¶Œí•œì„¤ì • - userì™€ group ìƒì„±í•˜ê³ , tomcat í™”ì¼ì˜ ì†Œìœ ê¶Œ ë³€ê²½í•œë‹¤.
 useradd tomcat
 groupadd tomcat
 cd /tomcat
 chown -R tomcat:tomcat tomcat
 
-#UI App ¹èÆ÷ Æú´õ¿ë °èÁ¤ »ı¼º
+#UI App ë°°í¬ í´ë”ìš© ê³„ì • ìƒì„±
 useradd realestateApp
 groupadd realestateApp
 
@@ -43,7 +43,7 @@ useradd challengeApp
 groupadd challengeApp
 
 
-5.systemd°¡ tomcatµ¥¸óÀ» Á¦¾îÇÏµµ·Ï µî·ÏÇÑ´Ù. 
+5.systemdê°€ tomcatë°ëª¬ì„ ì œì–´í•˜ë„ë¡ ë“±ë¡í•œë‹¤. 
 # cat /etc/systemd/system/challenge.service
 # Systemd unit file for challenge tomcat
 [Unit]
@@ -74,14 +74,14 @@ Restart=always
 [Install]
 WantedBy=multi-user.target
 
-ÂüÁ¶ : µî·ÏÇÏÁö ¾ÊÀ¸¸é, /opt/tomcat/bin/ µğ·ºÅä¸®¿¡¼­ ½ºÅ©¸³Æ®¸¦ ÀÌ¿ëÇÏ¿© µ¥¸óÀ» ½ÇÇà, Á¤ÁöÇØ¾ß ÇÑ´Ù.
-À©µµ¿ì¿¡¼­ ÀÛ¼ºÈÄ °³Çà Á¦°Å ÈÄ »ç¿ëÀÚ
+ì°¸ì¡° : ë“±ë¡í•˜ì§€ ì•Šìœ¼ë©´, /opt/tomcat/bin/ ë””ë ‰í† ë¦¬ì—ì„œ ìŠ¤í¬ë¦½íŠ¸ë¥¼ ì´ìš©í•˜ì—¬ ë°ëª¬ì„ ì‹¤í–‰, ì •ì§€í•´ì•¼ í•œë‹¤.
+ìœˆë„ìš°ì—ì„œ ì‘ì„±í›„ ê°œí–‰ ì œê±° í›„ ì‚¬ìš©ì
 
 sed -i -e 's/\r$//' inusquare_system_monitor.service
 
 
-6.ÅèÄ¹ ±âº» ¼³Á¤ÆÄÀÏ
-    6.1. ÅèÄ¹ URIEncoding=UTF-8 ¼³Á¤
+6.í†°ìº£ ê¸°ë³¸ ì„¤ì •íŒŒì¼
+    6.1. í†°ìº£ URIEncoding=UTF-8 ì„¤ì •
     vi /tomcat_home/conf/server.xml
     <Connector port="8088" protocol="HTTP/1.1"
                connectionTimeout="20000"
@@ -91,17 +91,17 @@ sed -i -e 's/\r$//' inusquare_system_monitor.service
             unpackWARs="true" autoDeploy="true">
       ~~
       ~~
-         ¸Ç ¹Ù´Ú¿¡ Ãß°¡
+         ë§¨ ë°”ë‹¥ì— ì¶”ê°€
         <Context path="" docBase="." reloadable="true"></Context>
 
-    6.2. ·Î±× ÆÄÀÏ µğ·ºÅä¸® °æ·Î »ı¼º
-    sudo -i <= root °èÁ¤À¸·Î º¯°æ
+    6.2. ë¡œê·¸ íŒŒì¼ ë””ë ‰í† ë¦¬ ê²½ë¡œ ìƒì„±
+    sudo -i <= root ê³„ì •ìœ¼ë¡œ ë³€ê²½
     mkdir -p /data/logs/tomcat/challenge/logs
     mkdir -p /data/logs/tomcat/realestate/logs
     chown tomcat:tomcat -R /data/logs
     chmod 766 -R /data/logs
 
-    6.3. ·Î±× ÆÄÀÏ °æ·Î ¼öÁ¤ 
+    6.3. ë¡œê·¸ íŒŒì¼ ê²½ë¡œ ìˆ˜ì • 
     vi /tomcat_home/conf/logging.properties
     ~~
     ############################################################
@@ -139,7 +139,7 @@ sed -i -e 's/\r$//' inusquare_system_monitor.service
     ~~
     ~~
     vi /tomcat_home/bin/catalina.sh
-    /CATALINA_OUT/ °Ë»ö
+    /CATALINA_OUT/ ê²€ìƒ‰
     
     ~~
     if [ -z "$CATALINA_OUT" ] ; then
@@ -147,13 +147,13 @@ sed -i -e 's/\r$//' inusquare_system_monitor.service
     fi
     ~~
 
-7. ÅèÄ¹ °ü¸®ÀÚ ÆäÀÌÁöµµ Á¢¼Ó°¡´ÉÇÏµµ·Ï ¼³Á¤ - manager¿Í host-manager, server status
-vi /tomcat/webapps/manager/META-INF/context.xml (ÁÖ¼®Ã³¸®)
+7. í†°ìº£ ê´€ë¦¬ì í˜ì´ì§€ë„ ì ‘ì†ê°€ëŠ¥í•˜ë„ë¡ ì„¤ì • - managerì™€ host-manager, server status
+vi /tomcat/webapps/manager/META-INF/context.xml (ì£¼ì„ì²˜ë¦¬)
 <Context antiResourceLocking="false" privileged="true" >
 <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
 
-vi /tomcat/webapps/host-manager/META-INF/context.xml (ÁÖ¼®Ã³¸®)
+vi /tomcat/webapps/host-manager/META-INF/context.xml (ì£¼ì„ì²˜ë¦¬)
 <Context antiResourceLocking="false" privileged="true" >
 <!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
          allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
@@ -166,7 +166,7 @@ vi /tomcat/conf/tomcat-users.xml
   <user username="admin" password="passwd" roles="manager-gui,admin-gui,manager-status" />
 </tomcat-users>
 
-8.tomcatÀ» systemd ¿¡ µî·ÏÇÏ°í, tomcatÀ» ½ÇÇà Å×½ºÆ®
+8.tomcatì„ systemd ì— ë“±ë¡í•˜ê³ , tomcatì„ ì‹¤í–‰ í…ŒìŠ¤íŠ¸
 systemctl daemon-reload
 systemctl enable realestate
 systemctl enable challenge
@@ -174,23 +174,23 @@ systemctl enable challenge
 systemctl start realestate
 systemctl start challenge
 
-9. tomcat ±ÇÇÑÀ¸·Î mvn ½ÇÇà½ÃÅ°´Â sodu ±ÇÇÑ ºÎ¿©
-    9.1. visudo ( È¤Àº vi /etc/sudoers )
-    ¾Æ·¡ ³»¿ëÁß 
+9. tomcat ê¶Œí•œìœ¼ë¡œ mvn ì‹¤í–‰ì‹œí‚¤ëŠ” sodu ê¶Œí•œ ë¶€ì—¬
+    9.1. visudo ( í˜¹ì€ vi /etc/sudoers )
+    ì•„ë˜ ë‚´ìš©ì¤‘ 
     ## Allows people in group wheel to run all commands
 
-    # %wheel        ALL=(ALL)       ALL             <== ¾Õ¿¡ ÁÖ¼® ÇØÁ¦
+    # %wheel        ALL=(ALL)       ALL             <== ì•ì— ì£¼ì„ í•´ì œ
     ~~
     ## Allow root to run any commands anywhere
     root    ALL=(ALL)       ALL
     devUser ALL=(ALL)       ALL
-    tomcat  ALL=(ALL)       ALL                     <== sudo ±ÇÇÑÀ» ºÎ¿©ÇÒ Æ¯Á¤ »ç¿ëÀÚ Ãß°¡ 
+    tomcat  ALL=(ALL)       ALL                     <== sudo ê¶Œí•œì„ ë¶€ì—¬í•  íŠ¹ì • ì‚¬ìš©ì ì¶”ê°€ 
     ~~
 
-    9.2. visudo¿¡¼­ »ç¿ëÀÚ °èÁ¤À» Ãß°¡ÇÑ µÚ ¸í·É¾î´Â ½ÇÇà
-    usermod -aG wheel tomcat                        <== tomcat¿¡ wheel ±ÇÇÑºÎ¿©·Î sudo ±ÇÇÑ ºÎ¿©
+    9.2. visudoì—ì„œ ì‚¬ìš©ì ê³„ì •ì„ ì¶”ê°€í•œ ë’¤ ëª…ë ¹ì–´ëŠ” ì‹¤í–‰
+    usermod -aG wheel tomcat                        <== tomcatì— wheel ê¶Œí•œë¶€ì—¬ë¡œ sudo ê¶Œí•œ ë¶€ì—¬
 
-    9.3. su - tomcat                                <== su - tomcat ¸í·É¾î·Î rootÀÇ È¨ ¸®½ºÆ®°¡ ³ª¿À´ÂÁö È®ÀÎ
+    9.3. su - tomcat                                <== su - tomcat ëª…ë ¹ì–´ë¡œ rootì˜ í™ˆ ë¦¬ìŠ¤íŠ¸ê°€ ë‚˜ì˜¤ëŠ”ì§€ í™•ì¸
     Last login: Fri Sep 10 02:35:00 KST 2021 on pts/2
     Last failed login: Fri Sep 10 10:53:59 KST 2021 from 115.76.168.131 on ssh:notty
     There was 1 failed login attempt since the last successful login.
@@ -222,62 +222,62 @@ systemctl start challenge
     -rw-r--r--.  1 root root   129 Dec 29  2013 .tcshrc
     [tomcat@localhost ~]$
     
-    Æ¯Á¤ »ç¿ëÀÚ¿¡ sudo ±ÇÇÑ ºÎ¿© - ÂüÁ¶ https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos
+    íŠ¹ì • ì‚¬ìš©ìì— sudo ê¶Œí•œ ë¶€ì—¬ - ì°¸ì¡° https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos
 
-10. jenkins pipeline ¿¡¼­ sudo »ç¿ë ±ÇÇÑºÎ¿©( password ¹¯Áö ¾Ê´Â sudo »ç¿ë)
-    10.1. visudo ( È¤Àº vi /etc/sudoers )
-    ¾Æ·¡ ³»¿ëÁß 
+10. jenkins pipeline ì—ì„œ sudo ì‚¬ìš© ê¶Œí•œë¶€ì—¬( password ë¬»ì§€ ì•ŠëŠ” sudo ì‚¬ìš©)
+    10.1. visudo ( í˜¹ì€ vi /etc/sudoers )
+    ì•„ë˜ ë‚´ìš©ì¤‘ 
     ~~
     ## Same thing without a password
     # %wheel        ALL=(ALL)       NOPASSWD: ALL
-    jenkins ALL=(ALL)       NOPASSWD: ALL               <== ÆĞ½º¿öµå ¹¯Áö ¾Ê´Â sudo ±ÇÇÑÀ» ºÎ¿©
+    jenkins ALL=(ALL)       NOPASSWD: ALL               <== íŒ¨ìŠ¤ì›Œë“œ ë¬»ì§€ ì•ŠëŠ” sudo ê¶Œí•œì„ ë¶€ì—¬
 
-    10.2. visudo¿¡¼­ »ç¿ëÀÚ °èÁ¤À» Ãß°¡ÇÑ µÚ ¸í·É¾î´Â ½ÇÇà
-    usermod -aG wheel jenkins                        <== jenkins¿¡ wheel ±ÇÇÑºÎ¿©·Î sudo ±ÇÇÑ ºÎ¿©
+    10.2. visudoì—ì„œ ì‚¬ìš©ì ê³„ì •ì„ ì¶”ê°€í•œ ë’¤ ëª…ë ¹ì–´ëŠ” ì‹¤í–‰
+    usermod -aG wheel jenkins                        <== jenkinsì— wheel ê¶Œí•œë¶€ì—¬ë¡œ sudo ê¶Œí•œ ë¶€ì—¬
 
     10.3. su -s /bin/bash jenkins
 
-11. ÅèÄ¹ ·±Å¸ÀÓ½Ã spring.profiles.active ¼³Á¤
-    /tomcat/realestate/bin È¤Àº /tomcat/challenge/bin ¿¡¼­ ¾Æ·¡ ¼³Á¤ÆÄÀÏ »ı¼º
+11. í†°ìº£ ëŸ°íƒ€ì„ì‹œ spring.profiles.active ì„¤ì •
+    /tomcat/realestate/bin í˜¹ì€ /tomcat/challenge/bin ì—ì„œ ì•„ë˜ ì„¤ì •íŒŒì¼ ìƒì„±
 
-    vi setenv.sh ¿¡ ³»¿ëÀº ´ÙÀ½°ú °°ÀÌ Ã¤¿ö³õÀ¸¸é µÈ´Ù.
+    vi setenv.sh ì— ë‚´ìš©ì€ ë‹¤ìŒê³¼ ê°™ì´ ì±„ì›Œë†“ìœ¼ë©´ ëœë‹¤.
 
-    ## °³¹ßÈ¯°æ
+    ## ê°œë°œí™˜ê²½
     export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=dev"
 
-    ## ¿î¿µÈ¯°æ
+    ## ìš´ì˜í™˜ê²½
     ## export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=prod"
 
-12. Á¢±Ù ±ÇÇÑ ºÎ¿©(jenkins ºôµå½Ã ÇÊ¿ä)
+12. ì ‘ê·¼ ê¶Œí•œ ë¶€ì—¬(jenkins ë¹Œë“œì‹œ í•„ìš”)
      chmod 757 -R /data/inusquare/inusquareApp
 
-13. ±âÅ¸ À¯Æ¿ ¼³Ä¡µÈ
-    13.1. zip, unzip ¼³Ä¡
+13. ê¸°íƒ€ ìœ í‹¸ ì„¤ì¹˜ëœ
+    13.1. zip, unzip ì„¤ì¹˜
     yum install -y zip.x86_64
     yum install -y unzip.x86_64
 
-    13.2. wget ¼³Ä¡
+    13.2. wget ì„¤ì¹˜
     yum -y install wget.x86_64
 
-    13.3. netstat ¼³Ä¡
+    13.3. netstat ì„¤ì¹˜
     yum info net-tools
     yum -y install net-tools
 
-    13.4. ¹æÈ­º® À¯Æ¿ ¼³Ä¡
+    13.4. ë°©í™”ë²½ ìœ í‹¸ ì„¤ì¹˜
     yum install firewalld
     systemctl start firewalld
     systemctl enable firewalld
 
-14. jenkins ºôµå ½ÇÇàÀü È¯°æ¼³Á¤
-    14.1. subversion ¼³Ä¡
+14. jenkins ë¹Œë“œ ì‹¤í–‰ì „ í™˜ê²½ì„¤ì •
+    14.1. subversion ì„¤ì¹˜
     yum install subversion
-    14.2. jenkins¸¦ ÅëÇØ ºôµåÇÑ warÆÄÀÏ ¹èÆ÷ Æú´õ(/app/applications)¿¡ cp °¡´ÉÇÏµµ·Ï ±ÇÇÑ ºÎ¿©
+    14.2. jenkinsë¥¼ í†µí•´ ë¹Œë“œí•œ waríŒŒì¼ ë°°í¬ í´ë”(/app/applications)ì— cp ê°€ëŠ¥í•˜ë„ë¡ ê¶Œí•œ ë¶€ì—¬
     chmod 777 /app/applications/realestate /app/applications/challenge
 
-15. ¸®´ª½º ¼­¹ö ½Ã°£ µ¿±âÈ­ÇÏ±â
-    15.1. rdate ¼³Ä¡
+15. ë¦¬ëˆ…ìŠ¤ ì„œë²„ ì‹œê°„ ë™ê¸°í™”í•˜ê¸°
+    15.1. rdate ì„¤ì¹˜
     yum -y install rdate
-    15.2. Å¸ÀÓ ¼­¹ö¸¦ time.bora.netÀ¸·Î ¼³Á¤ÇÏ°í, Å¸ÀÓ ¼­¹ö·ÎºÎÅÍ ½Ã°£À» ÇÒ´ç¹Ş¾Æ ÇÏµå¿ş¾î ½Ã°£À¸·Î ¼¼ÆÃ
+    15.2. íƒ€ì„ ì„œë²„ë¥¼ time.bora.netìœ¼ë¡œ ì„¤ì •í•˜ê³ , íƒ€ì„ ì„œë²„ë¡œë¶€í„° ì‹œê°„ì„ í• ë‹¹ë°›ì•„ í•˜ë“œì›¨ì–´ ì‹œê°„ìœ¼ë¡œ ì„¸íŒ…
     rdate -s time.bora.net && hwclock -w
 
     
