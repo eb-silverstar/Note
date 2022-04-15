@@ -1,0 +1,284 @@
+1.java jdk 설치(openJDK 1.8.0 이상 설치)
+yum list java*jdk-devel     <== 패키지 버전 확인 , 패키지명 끝에 devel이라고 끝나면 JDK 아니면, JRE를 의미함.
+
+yum -y install java-1.8.0-openjdk-devel.x86_64
+
+    1.1. 설치된 JDK 경로 확인
+    [root@localhost firewalld]# which java
+    /bin/java
+    [root@localhost firewalld]# ls -alhtr /bin/java
+    lrwxrwxrwx. 1 root root 22 Sep  4 22:13 /bin/java -> /etc/alternatives/java
+    [root@localhost firewalld]# ls -alhtr /etc/alternatives/java
+    lrwxrwxrwx. 1 root root 73 Sep  4 22:13 /etc/alternatives/java -> /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64/jre/bin/java
+
+2.java 경로 설정 ,톰캣 경로 설정
+vi /etc/profile
+export JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64/
+export CATALINA_HOME=/tomcat
+export PATH=$JAVA_HOME/bin:$CATALINA_HOME/bin:$PATH
+
+참조 : CentOS 7.2 에서 yum으로 tomcat을 설치하면 tomcat 7 이 설치된다. 현재 tomcat은 9버전 이 최신 버전이고 이를 설치하려면 아래와 같이 진행하면 된다.
+       (그래서 yum 사용하지 않고 수동설치함.)
+
+3.톰캣 설치
+cd /inusquare_doc/environment
+tar xvzpf apache-tomcat-9.0.22.tar.gz
+mv apache-tomcat-9.0.52 /tomcat
+
+3.1. IPv4(tcp) tomcat start  - tomcat설치폴더의 bin폴더의 catalina.sh 편집(아래내용 추가)
+# IPv4(tcp) tomcat start
+JAVA_OPTS="$JAVA_OPTS -Djava.net.preferIPv4Stack=true"
+
+4.톰캣,nginx 권한설정 - user와 group 생성하고, tomcat 화일의 소유권 변경한다.
+useradd tomcat
+groupadd tomcat
+cd /tomcat
+chown -R tomcat:tomcat tomcat
+
+#UI App 배포 폴더용 계정 생성
+useradd realestateApp
+groupadd realestateApp
+
+useradd challengeApp
+groupadd challengeApp
+
+
+5.systemd가 tomcat데몬을 제어하도록 등록한다. 
+# cat /etc/systemd/system/challenge.service
+# Systemd unit file for challenge tomcat
+[Unit]
+Description=Challenge BackEnd Service Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+User=tomcat
+Group=tomcat
+
+Environment=JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk-1.8.0.302.b08-0.el7_9.x86_64
+Environment=CATALINA_PID=/tomcat/challenge/temp/tomcat.pid
+Environment=CATALINA_HOME=/tomcat/challenge
+Environment=CATALINA_BASE=/tomcat/challenge
+Environment='CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC'
+Environment='JAVA_OPTS=-Djava.awt.headless=true -Djava.security.egd=file:/dev/./urandom'
+
+ExecStart=/tomcat/challenge/bin/catalina.sh start
+ExecStop=/tomcat/challenge/bin/catalina.sh stop
+#ExecStart=/tomcat/challenge/bin/startup.sh
+#ExecStop=/bin/kill -15 $MAINPID
+
+#iUMask=0007
+RestartSec=10
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
+참조 : 등록하지 않으면, /opt/tomcat/bin/ 디렉토리에서 스크립트를 이용하여 데몬을 실행, 정지해야 한다.
+윈도우에서 작성후 개행 제거 후 사용자
+
+sed -i -e 's/\r$//' inusquare_system_monitor.service
+
+
+6.톰캣 기본 설정파일
+    6.1. 톰캣 URIEncoding=UTF-8 설정
+    vi /tomcat_home/conf/server.xml
+    <Connector port="8088" protocol="HTTP/1.1"
+               connectionTimeout="20000"
+               redirectPort="443" proxyPort="443" scheme="https" URIEncoding="UTF-8" />
+
+      <Host name="localhost"  appBase="/app/applications/realestate"
+            unpackWARs="true" autoDeploy="true">
+      ~~
+      ~~
+         맨 바닥에 추가
+        <Context path="" docBase="." reloadable="true"></Context>
+
+    6.2. 로그 파일 디렉토리 경로 생성
+    sudo -i <= root 계정으로 변경
+    mkdir -p /data/logs/tomcat/challenge/logs
+    mkdir -p /data/logs/tomcat/realestate/logs
+    chown tomcat:tomcat -R /data/logs
+    chmod 766 -R /data/logs
+
+    6.3. 로그 파일 경로 수정 
+    vi /tomcat_home/conf/logging.properties
+    ~~
+    ############################################################
+    # Handler specific properties.
+    # Describes specific configuration info for Handlers.
+    ############################################################
+
+    1catalina.org.apache.juli.AsyncFileHandler.level = FINE
+    1catalina.org.apache.juli.AsyncFileHandler.directory = /data/logs/tomcat/realestate/logs
+    1catalina.org.apache.juli.AsyncFileHandler.prefix = catalina.
+    1catalina.org.apache.juli.AsyncFileHandler.maxDays = 90
+    1catalina.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+    2localhost.org.apache.juli.AsyncFileHandler.level = FINE
+    2localhost.org.apache.juli.AsyncFileHandler.directory = /data/logs/tomcat/realestate/logs
+    2localhost.org.apache.juli.AsyncFileHandler.prefix = localhost.
+    2localhost.org.apache.juli.AsyncFileHandler.maxDays = 90
+    2localhost.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+    3manager.org.apache.juli.AsyncFileHandler.level = FINE
+    3manager.org.apache.juli.AsyncFileHandler.directory = /data/logs/tomcat/realestate/logs
+    3manager.org.apache.juli.AsyncFileHandler.prefix = manager.
+    3manager.org.apache.juli.AsyncFileHandler.maxDays = 90
+    3manager.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+    4host-manager.org.apache.juli.AsyncFileHandler.level = FINE
+    4host-manager.org.apache.juli.AsyncFileHandler.directory = /data/logs/tomcat/realestate/logs
+    4host-manager.org.apache.juli.AsyncFileHandler.prefix = host-manager.
+    4host-manager.org.apache.juli.AsyncFileHandler.maxDays = 90
+    4host-manager.org.apache.juli.AsyncFileHandler.encoding = UTF-8
+
+    java.util.logging.ConsoleHandler.level = FINE
+    java.util.logging.ConsoleHandler.formatter = org.apache.juli.OneLineFormatter
+    java.util.logging.ConsoleHandler.encoding = UTF-8
+    ~~
+    ~~
+    vi /tomcat_home/bin/catalina.sh
+    /CATALINA_OUT/ 검색
+    
+    ~~
+    if [ -z "$CATALINA_OUT" ] ; then
+      CATALINA_OUT=/data/logs/tomcat/realestate/logs/catalina.out
+    fi
+    ~~
+
+7. 톰캣 관리자 페이지도 접속가능하도록 설정 - manager와 host-manager, server status
+vi /tomcat/webapps/manager/META-INF/context.xml (주석처리)
+<Context antiResourceLocking="false" privileged="true" >
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+vi /tomcat/webapps/host-manager/META-INF/context.xml (주석처리)
+<Context antiResourceLocking="false" privileged="true" >
+<!--  <Valve className="org.apache.catalina.valves.RemoteAddrValve"
+         allow="127\.\d+\.\d+\.\d+|::1|0:0:0:0:0:0:0:1" /> -->
+
+vi /tomcat/conf/tomcat-users.xml
+  <role rolename="tomcat"/>
+  <role rolename="admin-gui"/>
+  <role rolename="manager-gui"/>
+  <role rolename="manager-status"/>
+  <user username="admin" password="passwd" roles="manager-gui,admin-gui,manager-status" />
+</tomcat-users>
+
+8.tomcat을 systemd 에 등록하고, tomcat을 실행 테스트
+systemctl daemon-reload
+systemctl enable realestate
+systemctl enable challenge
+
+systemctl start realestate
+systemctl start challenge
+
+9. tomcat 권한으로 mvn 실행시키는 sodu 권한 부여
+    9.1. visudo ( 혹은 vi /etc/sudoers )
+    아래 내용중 
+    ## Allows people in group wheel to run all commands
+
+    # %wheel        ALL=(ALL)       ALL             <== 앞에 주석 해제
+    ~~
+    ## Allow root to run any commands anywhere
+    root    ALL=(ALL)       ALL
+    devUser ALL=(ALL)       ALL
+    tomcat  ALL=(ALL)       ALL                     <== sudo 권한을 부여할 특정 사용자 추가 
+    ~~
+
+    9.2. visudo에서 사용자 계정을 추가한 뒤 명령어는 실행
+    usermod -aG wheel tomcat                        <== tomcat에 wheel 권한부여로 sudo 권한 부여
+
+    9.3. su - tomcat                                <== su - tomcat 명령어로 root의 홈 리스트가 나오는지 확인
+    Last login: Fri Sep 10 02:35:00 KST 2021 on pts/2
+    Last failed login: Fri Sep 10 10:53:59 KST 2021 from 115.76.168.131 on ssh:notty
+    There was 1 failed login attempt since the last successful login.
+    [tomcat@localhost ~]$ sudo ls -la /root
+
+    We trust you have received the usual lecture from the local System
+    Administrator. It usually boils down to these three things:
+
+        #1) Respect the privacy of others.
+        #2) Think before you type.
+        #3) With great power comes great responsibility.
+
+    [sudo] password for tomcat:
+    total 88
+    dr-xr-x---.  6 root root  4096 Sep 10 21:49 .
+    dr-xr-xr-x. 25 root root  4096 Sep 10 21:51 ..
+    -rw-------.  1 root root  1538 Sep  3 16:31 anaconda-ks.cfg
+    -rw-------.  1 root root 31638 Sep 10 21:50 .bash_history
+    -rw-r--r--.  1 root root    18 Dec 29  2013 .bash_logout
+    -rw-r--r--.  1 root root   176 Dec 29  2013 .bash_profile
+    -rw-r--r--.  1 root root   176 Dec 29  2013 .bashrc
+    -rw-r--r--.  1 root root   100 Dec 29  2013 .cshrc
+    drwxr-xr-x   3 root root  4096 Sep  9 21:58 .m2
+    -rw-------   1 root root  1527 Sep  5 17:58 .mysql_history
+    drwxr-----.  3 root root  4096 Sep  5 02:02 .pki
+    -rw-------   1 root root  1024 Sep  6 00:45 .rnd
+    drwxr-xr-x.  3 root root  4096 Sep  5 02:40 .subversion
+    drwxr-xr-x   4 root root  4096 Sep  5 03:30 .svn
+    -rw-r--r--.  1 root root   129 Dec 29  2013 .tcshrc
+    [tomcat@localhost ~]$
+    
+    특정 사용자에 sudo 권한 부여 - 참조 https://phoenixnap.com/kb/how-to-create-add-sudo-user-centos
+
+10. jenkins pipeline 에서 sudo 사용 권한부여( password 묻지 않는 sudo 사용)
+    10.1. visudo ( 혹은 vi /etc/sudoers )
+    아래 내용중 
+    ~~
+    ## Same thing without a password
+    # %wheel        ALL=(ALL)       NOPASSWD: ALL
+    jenkins ALL=(ALL)       NOPASSWD: ALL               <== 패스워드 묻지 않는 sudo 권한을 부여
+
+    10.2. visudo에서 사용자 계정을 추가한 뒤 명령어는 실행
+    usermod -aG wheel jenkins                        <== jenkins에 wheel 권한부여로 sudo 권한 부여
+
+    10.3. su -s /bin/bash jenkins
+
+11. 톰캣 런타임시 spring.profiles.active 설정
+    /tomcat/realestate/bin 혹은 /tomcat/challenge/bin 에서 아래 설정파일 생성
+
+    vi setenv.sh 에 내용은 다음과 같이 채워놓으면 된다.
+
+    ## 개발환경
+    export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=dev"
+
+    ## 운영환경
+    ## export JAVA_OPTS="$JAVA_OPTS -Dspring.profiles.active=prod"
+
+12. 접근 권한 부여(jenkins 빌드시 필요)
+     chmod 757 -R /data/inusquare/inusquareApp
+
+13. 기타 유틸 설치된
+    13.1. zip, unzip 설치
+    yum install -y zip.x86_64
+    yum install -y unzip.x86_64
+
+    13.2. wget 설치
+    yum -y install wget.x86_64
+
+    13.3. netstat 설치
+    yum info net-tools
+    yum -y install net-tools
+
+    13.4. 방화벽 유틸 설치
+    yum install firewalld
+    systemctl start firewalld
+    systemctl enable firewalld
+
+14. jenkins 빌드 실행전 환경설정
+    14.1. subversion 설치
+    yum install subversion
+    14.2. jenkins를 통해 빌드한 war파일 배포 폴더(/app/applications)에 cp 가능하도록 권한 부여
+    chmod 777 /app/applications/realestate /app/applications/challenge
+
+15. 리눅스 서버 시간 동기화하기
+    15.1. rdate 설치
+    yum -y install rdate
+    15.2. 타임 서버를 time.bora.net으로 설정하고, 타임 서버로부터 시간을 할당받아 하드웨어 시간으로 세팅
+    rdate -s time.bora.net && hwclock -w
+
+    
+    
