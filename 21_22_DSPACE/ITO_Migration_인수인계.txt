@@ -1,0 +1,101 @@
+1. swagger
+api_spec.yaml
+
+api, backend 제외 거의 건드릴 게 없음
+
+requirements.txt 스펙
+유니테스트 - pytest
+린트 - flake
+sqllite3 -> db
+필요없는 것 삭제하고 다시 commit 예정
+
+manage.py - 장소 관련 모든 commit 실행
+
+backend/_init_.py
+abstractFactoryPattern 이해 필요
+
+core/exception.py
+
+fixtures - 건드릴 일 거의 없음
+장고에서 사용
+app.json - 첼시에서 지원하는 service
+source.json - 첼시에 있는 깃랩 파일들 미리 만들어놓은 것
+
+management
+cli command
+fixture 파일로 안 되는 부분 remote에 있는 소스 파일들 당겨오기 위해
+ex) python manage.py etl --service=chelsea --source_app=gitlab
+=> 데이터 가져와서 sqlite에 write
+(local에 있는 database에서 가져옴)
+
+migrations
+db migrations 자동으로 생성됨
+
+test
+root -> pytest -> /test/test~ 파일들 모두 돌림
+
+장고 설정 필요. 서버는 설정 맞춰놓음.
+
+server/templates
+이메일 발송 기능. 만들다 만 것.
+
+jenkins는 migration 대상에서 제외됨
+
+
+
+
+/server/api/system.py
+healthcheck 용도 살았는지 죽었는지
+
+/_init_.py
+api 공통 코드
+response 할 때 모든 api가 이용
+
+/v1/urls.py
+url routing 설정 파일들
+
+/v1/views/service.py
+가장 상위
+목록 하나 보여주는 것
+danjo dictionary랑 list로 serialize
+
+/v1/view/app.py
+list, 등록, 수정
+
+/vi/view/source.py
+source table에서 select
+apihelperfactory 사용
+retrive - 1건 가져올 때
+
+/v1/view/migration.py
+migration 접수된 내용을 db에 기록
+json 포맷으로 래빗MQ 에 저장
+다음 dispatcher가 처리
+
+/v1/view/migrions_log.py
+접수-시작-성공/실패
+dsipatcher가 호출함
+끝나면 portal의 taget project 상태 변경(send status)
+
+/v1/view/stat.py
+일별/앱별 migration 집계(성공/실패)
+backoffice에서 migration trend 그릴 때 이 api 사용해야 함
+
+
+
+
+/server/models.py
+데이터 모델 정의
+dangjo에서 사용
+model 변경되면 migration script dangjo에서 만들어야함
+ex) python managedocpy ~ 명령어 찾아볼 것
+
+
+server/backends/dspace/api.py
+update 가 portal에 send status하는 부분
+
+dispatcher - migration_log - api
+
+
+
+git으로 배포.. -> jenkins로 바꿔도..
