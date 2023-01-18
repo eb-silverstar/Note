@@ -1,0 +1,37 @@
+1. request
+
+GET /ndm/jira/{jiraId}
+
+
+
+2. response
+
+{
+	"jiraId": 0,
+	"projectType": "",
+	"members": [
+		{
+			"loginId": "",
+			"name": ""
+		}
+	],
+	"notificationScheme": "",
+	"permissionScheme": "",
+	"workflowScheme": "",
+	"versions": [
+		"versionId": 0,
+		"versionName": ""
+	],
+	"boards": [
+		{
+			"boardId": 0,
+			"boardName": ""
+			"sprints": [
+				"sprintId": 0,
+				"sprintName": ""
+			]
+		}
+	]
+}
+
+※ projectType이 business일 경우, versions와 boards는 빈 배열.

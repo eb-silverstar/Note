@@ -1,0 +1,34 @@
+1. request
+
+GET /ndm/jira/{jiraId}/issue
+
+Parameter : versionId, boardId, sprintId
+
+
+
+2. response
+
+[
+	{
+		"id": 0,
+		"key": "",
+		"summary": "",
+		"assignee": {
+			"loginId": "",
+			"name": ""
+		},
+		"status": "",
+		"issueType": "",
+		"priority": "",
+		"updated": ""
+	}
+]
+
+
+
+3. 분기
+
+1) business -> 1번 API
+2) software && version -> 1번 API with jql
+3) software && board -> 2번 API
+4) software && board+sprint -> 3번 API
