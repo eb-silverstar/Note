@@ -1,0 +1,17 @@
+//로컬 저장소 생성
+git init
+
+//해당디렉토리의 파일 깃에 추가
+git add -A
+git add *
+git add .mvn
+git add -f .gitignore
+
+//커밋
+git commit -m "first commit"
+
+//원격 저장소 추가
+git remote add origin http://192.168.0.45:8880/devops/dspace-2fa-sms.git
+
+//원격 저장소에 push
+git push -u origin master
