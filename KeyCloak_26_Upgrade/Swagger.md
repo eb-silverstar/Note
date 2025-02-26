@@ -61,12 +61,12 @@ Response가 Portal Front 에서 반환해 주는 페이지임을 확인 (5번째
 /v3/api-docs/swagger-config
 /v3/api-docs
 ```
-해당하는 API들 설정 추가
+해당하는 경로 설정 추가
 ```yml
 springdoc:
   swagger-ui:
     url: '/api/v3/api-docs'
-    configUrl: '/api/v3/api-docs/swagger-config
+    configUrl: '/api/v3/api-docs/swagger-config'
 ```
 
 ### KeyCloak 인증 오류
