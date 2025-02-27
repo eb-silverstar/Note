@@ -2,7 +2,7 @@
 ```
 springfox-swagger2 2.9.2
 springfox-swagger-ui 2.10.5
-↓
+            ↓
 springdoc-openapi-starter-webmvc-ui 2.8.3
 ```
 Springfox Swagger2 는 Jakarta 를 지원하지 않아 Springboot3 환경에서 사용 불가
