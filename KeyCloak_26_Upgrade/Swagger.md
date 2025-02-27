@@ -32,7 +32,7 @@ keycloak:
     auth-path: /realms/dev/protocol/openid-connect/auth
 ```
 ### application-local.yml
-```
+```yml
 #Server
 server:
     servlet:
@@ -201,11 +201,12 @@ springdoc:
 Authorization 시 KeyCloak 로그인 페이지에서 `invalid_redirect_uri` 오류 발생
 호출 URL이 아래와 같음
 ```
-https://poc.xxx.co.kr/auth/realms/{realm-name}/protocol/openid-connect/auth?response_type=code&client_id={client_id}&redirect_uri=http%3A%2F%2Fpoc.xxx.co.kr%2Fswagger-ui%2Foauth2-redirect.html&state={state}
+https://poc.xxx.co.kr/auth/realms/dev/protocol/openid-connect/auth?response_type=code&client_id=portal&redirect_uri=http%3A%2F%2Fpoc.xxx.co.kr%2Fswagger-ui%2Foauth2-redirect.html&state={state}
 ```
 Parameter 중 redirect_uri 를 보면 2가지 문제점이 존재함
 1. NGINX 설정으로 인해 모든 Backend 로 오는 요청은 /api 로 호출되어야 함
-2. KeyCloak 해당 Client의 Valid redirect URIs 에 등록된 주소는 `https://poc.xxx.co.kr/*` 로 redirect_uri Value 와 Protocol(http)이 다름
+2. KeyCloak > Realm `dev` > Client `portal` 의 `Valid redirect URIs` 에 등록된 주소는 `https://poc.xxx.co.kr/*` 로 redirect_uri Value 와 Protocol(http)이 다름
+
 따라서 Swagger 설정에 redirect_uri 를 추가함
 ```yml
 springdoc:
@@ -214,3 +215,28 @@ springdoc:
 ```
 
 ### API 호출 오류
+Swagger 에서 API 호출 시 오류 발생
+```
+Failed to Fetch
+Possible Reasons:
+
+ - CORS
+ - Network Failure
+ - URL scheme must be "http" or "https" for CORS request.
+```
+접속 protocol 은 https, 호출 protocol은 http로 상이함
+별도로 Server 설정을 하지 않을 경우 Swagger 는 현재 호스트의 Root URL 을 절대경로로 지정함
+상대 경로로 호출 되도록 SwaggerConfig 에 서버 설정 추가
+```Java
+@Configuration
+public class SwaggerConfig {
+
+    @Bean
+    public OpenAPI openAPI() {
+        return new OpenAPI()
+                .addServersItem(new Sever().url("/api/"))
+                ...;
+    }
+
+}
+```
