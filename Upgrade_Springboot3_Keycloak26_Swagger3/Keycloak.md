@@ -17,7 +17,41 @@ bin/kc.[sh|bat] start --bootstrap-admin-username tmpadm --bootstrap-admin-passwo
 ```
 단, http://localhost:8080 이 아닌 http://127.0.0.1:8080 로 접속 시 이전 버전처럼 UI로 임시 관리자 생성 가능
 
+### 도메인 등록
+`/etc/hosts` 파일에 KeyCloak 에서 호출하는 서버 도메인 등록
+```
+11.111.111.11 p-server-KeycloakAP1 #해당 서버
+22.222.222.22 poc.xxx.co.kr
+...
+```
+
+## Admin Console
+
 ## Providers
+### login-event-listner
+#### Upgrade Spec
+```
+JDK 1.8.0.202
+keycloak-server-spi-private 13.0.1
+keycloak-services 13.0.1
+        ↓
+JDK 21.0.5
+keycloak-server-spi-private 26.0.8
+keycloak-services 26.0.8
+```
+#### Admin Console
+1. `{KEYCLOAK_HOME}/providers` 폴더에 login-event-listner.jar 파일 넣고 기동시킨 후 Admin Console 접속
+2. `Realm settings > Events > Event listners` 에서 login_event_listner 등록
+#### Bugfix
+Portal 호출 시 오류 발생
+```
+ERROR [com.kt.keycloak.event.listner.LoginEventListnerProvider] (executor-thread-1) java.net.UnknownHostException: poc.xxx.co.kr
+```
+`/etc/hosts` 파일에 도메인 등록
+```
+22.222.222.22 poc.xxx.co.kr
+```
+
 ### custom-username-password-form (LDAP용 비밀번호 암복호화)
 #### Upgrade Spec
 ```
