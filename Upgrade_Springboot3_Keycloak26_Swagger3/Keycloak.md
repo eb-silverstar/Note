@@ -1,4 +1,5 @@
 ## Upgrade Spec
+Keyclok 25.0.0 부터 Java 21 지원 (Java 17 지원 중단)
 ```
 Keycloak 13.0.0
 JDK 1.8.0.202
@@ -6,7 +7,6 @@ JDK 1.8.0.202
 Keycloak 26.0.7
 JDK 21.0.5
 ```
-Keyclok 25.0.0 부터 Java 21 지원. (Java 17 지원 중단)
 
 ## Server
 ### 관리자 부트스트래핑
