@@ -135,6 +135,15 @@ public class SpringSecurityConfig {
 }
 ```
 
+## Annotation
+```java
+@Api(tags = "") → @Tag(name = "")
+@ApiOperation(value = "", notes = "") → @Operation(summary = "", description = "")
+@ApiModel(value = "", description = "") → @Schema(title = "", description = "")
+@ApiModelProperty(name = "", value = "", dataType = "", example = "") → @Schema(name = "", description = "", type = "", example = "")
+@ApiModelProperty(position = 1) //변환 불가. Swagger3 에서는 순서 지정 불가능
+```
+
 ## Bugfix
 ### API Docs 로딩 오류 (NGINX 통해 prefix URL 설정돼 있는 경우)
 POC 서버에 올린 후 Swagger 진입 시 오류 발생
