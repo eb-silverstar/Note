@@ -1,13 +1,37 @@
 ## Upgrade Spec
-Springfox Swagger2 는 Jakarta 를 지원하지 않아 Springboot3 환경에서 사용 불가하므로 Springdoc Swagger3 로 변경
+Springfox Swagger 2 는 Jakarta 를 지원하지 않아 Springboot 3 환경에서 사용 불가하므로 Springdoc Swagger 3 로 변경
 ```
-springfox-swagger2 2.9.2
+springfox-swagger2 2.9.2        → springdoc-openapi-starter-webmvc-ui 2.8.3
 springfox-swagger-ui 2.10.5
-            ↓
-springdoc-openapi-starter-webmvc-ui 2.8.3
 ```
 
-## Code
+## Import
+```java
+import io.swagger.annotations.Api;                 → import io.swagger.v3.oas.annotations.tags.Tag;
+import io.swagger.annotations.ApiOperation;        → import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.annotations.ApiModel;            → import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.annotations.ApiModelProperty;
+```
+
+## Annotation
+```java
+@Api(tags = "")                                                        → @Tag(name = "")
+@ApiOperation(value = "", notes = "")                                  → @Operation(summary = "", description = "")
+@ApiModel(value = "", description = "")                                → @Schema(title = "", description = "")
+@ApiModelProperty(name = "", value = "", dataType = "", example = "")  → @Schema(name = "", description = "", type = "", example = "")
+@ApiModelProperty(position = 1)                                        → 변환 불가. Swagger3 에서는 순서 지정 불가능
+@Hidden                                                                → 숨길 API/Operation 에 달아줌 (기존 SwaggerConfig 에 보여질 Tag 를 설정하던 방식에서 변경)
+```
+
+## Final Code
+### pom.xml
+```xml
+<dependency>
+    <groupId>org.springdoc</groupId>
+    <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+    <version>2.8.3</version>
+</dependency>
+```
 ### appication-poc.yml
 ```yml
 #Springdoc Swagger
@@ -133,15 +157,6 @@ public class SpringSecurityConfig {
     }
 
 }
-```
-
-## Annotation
-```java
-@Api(tags = "") → @Tag(name = "")
-@ApiOperation(value = "", notes = "") → @Operation(summary = "", description = "")
-@ApiModel(value = "", description = "") → @Schema(title = "", description = "")
-@ApiModelProperty(name = "", value = "", dataType = "", example = "") → @Schema(name = "", description = "", type = "", example = "")
-@ApiModelProperty(position = 1) //변환 불가. Swagger3 에서는 순서 지정 불가능
 ```
 
 ## Bugfix
