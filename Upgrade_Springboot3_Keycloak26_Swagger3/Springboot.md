@@ -85,94 +85,29 @@ if(responseResult.getStatusCode().is2xxSuccessful()) {
 HttpClient 4 에서 HttpClient 5 로 전환
 ```java
 // AS-IS
-@Configuration
-public class RestTemplateConfig {
+SSLContext sslContext = org.apache.http.ssl.SSLContexts.custom()
+    .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+    .build();
 
-    @Value("${spring.profiles.active}")
-    String springProfilesActive;
+SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
 
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
+CloseableHttpClient httpCleint = HttpClients.custom()
+    .setSSLSocketFactory(csf)
+    .build();
 
-    @Bean
-    public RestTemplate restTemplate() throws KeyStroeException, NoSuchAlgorithmException, KeyManagementException {
-        SSLContext sslContext;
-
-        if(springProfilesActive.equals("local") {
-            TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
-            sslContext = org.apache.http.ssl.SSLContexts.custom()
-                .loadTrustMaterial(null, acceptingTrustStrategy)
-                .build();
-        } else {
-            sslContext = org.apache.http.ssl.SSLContexts.custom()
-                .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                .build();
-        }
-
-        SSLConnectionSocketFactory csf = new SSLConnectionSocketFactory(sslContext, NoopHostnameVerifier.INSTANCE);
-
-        CloseableHttpClient httpCleint = HttpClients.custom()
-            .setSSLSocketFactory(csf)
-            .build();
-
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-
-        requestFactory.setHttpClient(httpClient);
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-
-        return restTemplate;
-    }
-
-}
-```
-```java
 // TO-BE
-@Configuration
-public class RestTemplateConfig {
+SSLContext sslContext = SSLContexts.custom()
+    .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+    .build();
 
-    @Value("${spring.profiles.active}")
-    String springProfilesActive;
-
-    @Bean
-    public RestTemplate getRestTemplate() {
-        return new RestTemplate();
-    }
-
-    @Bean
-    public RestTemplate restTemplate() throws KeyStroeException, NoSuchAlgorithmException, KeyManagementException {
-        SSLContext sslContext;
-
-        if(springProfilesActive.equals("local") {
-            TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
-            sslContext = SSLContexts.custom()
-                .loadTrustMaterial(null, acceptingTrustStrategy)
-                .build();
-        } else {
-            sslContext = SSLContexts.custom()
-                .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-                .build();
-        }
-
-        CloseableHttpClient httpCleint = HttpClients.custom()
-            .setConnectionManager(PoolingHttpClientConnectionManagerBuilder.create()
-                .setSSLSocketFactory(SSLConnectionSocketFactoryBuilder.create()
-                    .setSsslContext(sslContext)
-                    .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
-                    .build())
-                .build())
-            .build();
-
-        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
-
-        requestFactory.setHttpClient(httpClient);
-        RestTemplate restTemplate = new RestTemplate(requestFactory);
-
-        return restTemplate;
-    }
-
-}
+CloseableHttpClient httpCleint = HttpClients.custom()
+    .setConnectionManager(PoolingHttpClientConnectionManagerBuilder.create()
+        .setSSLSocketFactory(SSLConnectionSocketFactoryBuilder.create()
+            .setSsslContext(sslContext)
+            .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+            .build())
+        .build())
+    .build();
 ```
 ### Spring Profile
 ```yml
@@ -310,10 +245,8 @@ spring:
         activate:
             on-profile: poc
 ```
-
-## Bugfix
-### 테스트 위한 Library Log 추가
-#### logback-spring.xml
+### logback-spring.xml
+테스트 위한 외부 Library Log 추가
 ```xml
 <logger name ="org.springframework.security" level="DEBUG" additivity="false">
     <appender-ref ref="STDOUT" />
@@ -322,7 +255,56 @@ spring:
     <appender-ref ref="STDOUT" />
 </logger>
 ```
-## Logback Library 버전 불일치
+### RestTemplateConfig.java
+```java
+@Configuration
+public class RestTemplateConfig {
+
+    @Value("${spring.profiles.active}")
+    String springProfilesActive;
+
+    @Bean
+    public RestTemplate getRestTemplate() {
+        return new RestTemplate();
+    }
+
+    @Bean
+    public RestTemplate restTemplate() throws KeyStroeException, NoSuchAlgorithmException, KeyManagementException {
+        SSLContext sslContext;
+
+        if(springProfilesActive.equals("local") {
+            TrustStrategy acceptingTrustStrategy = (X509Certificate[] chain, String authType) -> true;
+            sslContext = SSLContexts.custom()
+                .loadTrustMaterial(null, acceptingTrustStrategy)
+                .build();
+        } else {
+            sslContext = SSLContexts.custom()
+                .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+                .build();
+        }
+
+        CloseableHttpClient httpCleint = HttpClients.custom()
+            .setConnectionManager(PoolingHttpClientConnectionManagerBuilder.create()
+                .setSSLSocketFactory(SSLConnectionSocketFactoryBuilder.create()
+                    .setSsslContext(sslContext)
+                    .setHostnameVerifier(NoopHostnameVerifier.INSTANCE)
+                    .build())
+                .build())
+            .build();
+
+        HttpComponentsClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory();
+
+        requestFactory.setHttpClient(httpClient);
+        RestTemplate restTemplate = new RestTemplate(requestFactory);
+
+        return restTemplate;
+    }
+
+}
+```
+
+## Bugfix
+### Logback Library 버전 불일치
 ```
 Logging system failed to initialize using configuration from 'null'
 java.lang.NoClassDefFoundError: ch/qos/logbnack/core/boolex/JaninoEventEvaluatorBase
@@ -337,7 +319,7 @@ logback-classic 1.5.13 부터 JaninoEventEvaluator 가 제거[(참고)](https://
     <version>1.5.16</version>
 </dependency>
 ```
-## 순환참조
+### 순환참조
 ```
 org.springframework.beans.factory.UnsatisfiedDependencyException: Error creating bean with name 'userService': Unsatisfied dependency expressed through field 'portalService': Error creating bean with name 'portalService': Unsatisfied dependency expressed through field 'userService': Error creating bean with name 'userService': Requested bean is currently increation: Is there an unresolvable circular reference or an asynchronous initialization dependency?
 ```
