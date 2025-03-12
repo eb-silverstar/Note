@@ -12,8 +12,7 @@ JDK 21.0.5
 ### 관리자 부트스트래핑
 해당 정책이 반영되며 ver.26.0.0 부터 최초 부팅 전 임시 관리자 계정 생성 후 접근 가능
 ```
-bin/kc.[sh|bat] start-dev --bootstrap-admin-client-id tmpadm --bootstrap-admin-client-secret secret
-bin/kc.[sh|bat] start --bootstrap-admin-username tmpadm --bootstrap-admin-password pass
+bin/kc.[sh|bat] bootstrap-admin user
 ```
 단, http://localhost:8080 이 아닌 http://127.0.0.1:8080 로 접속 시 이전 버전처럼 UI로 임시 관리자 생성 가능
 
@@ -25,7 +24,83 @@ bin/kc.[sh|bat] start --bootstrap-admin-username tmpadm --bootstrap-admin-passwo
 ...
 ```
 
+### Keycloak.conf
+`{KEYCLOAK_HOME}/conf/keycloak.conf`
+```conf
+# Database
+db-usernae=keycloak
+db-password={DB_PW}
+db-url=jdbc:postgresql://localhost:5432/keycloak
+# Observability
+health-enabled=ture
+metrics-enabled=true
+# HTTP
+http-enabled=true
+http-relative-path=/auth
+hostname-strict=false
+# Theme Cache
+spi-theme-static-max-age=-1
+spi-theme-cache-theme=false
+spi-theme-cache-templates=false
+# Logout
+spi-login-protocol-openid-connect-legacy-logout-redirect-uri=true
+# LDAP
+https-trust-store-type=default
+https-trust-store-file=/opt/openlogic-openjdk-21.0.5+11-linux-x64/lib/security/cacerts
+https-trust-store-password=changit
+```
+
+### LDAP 인증서
+제공 받은 ca.cer 파일을 USER_HOME 에 위치
+```
+keytool -import -alias ad -file "{USER_HOME}/ca.cer" -keystore "{JDK_HOME}/lib/security/cacerts" -storepass changeit
+```
+
 ## Admin Console
+### LDAP 연동
+`dev Realm > User federation > Ldap > Settings`
+```
+Vendor : Active Directory
+Connection URL : ldaps://ldap.com
+Use Truststore SPI : Always
+Connection pooling : On
+Bind DN : {LDAP_ID}
+Bind credentials : {LDAP_PW}
+Edit moe : READ_ONLY
+User DN : {LDAP 제공}
+Search scope : One Level
+Pagination : On
+Import users : On
+Sync Registrations : Off
+Batch size : 1000
+Periodicchanged user sync : On
+그 외 Default
+```
+`dev Realm > User federation > Ldap > Mappers`<br>
+Add Mapper
+```
+User Model Attribute : mobile_number
+LDAP Attribute : epmobile
+Reda Only : On
+Force a Default Value : On
+```
+Edit Mapper
+```
+1. create date
+Force a Default Value : Off
+
+2. Email
+Force a Default Value : Off
+
+3. firstName
+LDAP Attribute : sn
+
+4. lastName
+LDAP Attribute : givenName
+
+5. modify date
+Force a Default Value : Off
+```
 
 ## Providers
 ### login-event-listner
@@ -40,7 +115,7 @@ keycloak-server-spi-private 26.0.8
 keycloak-services 26.0.8
 ```
 #### Admin Console
-1. `{KEYCLOAK_HOME}/providers` 폴더에 login-event-listner.jar 파일 넣고 기동시킨 후 Admin Console 접속
+1. `{KEYCLOAK_HOME}/providers` 폴더에 login-event-listner.jar 파일을 놓고 기동시킨 후 Admin Console 접속
 2. `Realm settings > Events > Event listners` 에서 login_event_listner 등록
 #### Bugfix
 Portal 호출 시 오류 발생
@@ -78,3 +153,17 @@ jakarta.ws.rs.core.*
 ```
 #### Code
 상속 받은 UsernamePasswordForm 파일을 참고하여 변경된 부분 수정
+
+## Bugfix
+### LDAP 인증서 오류
+Admin Console 에서 LDAP 연동 테스트 시 오류 발생
+```
+LC-SERVICES0055: Error when authenticating to LDAP: simple bind failed: ldap.xx.com:663: javax.naming.CommunicationException: simple bind failed: ldap.xxx.com:636 [Root exception is javax.net.ssl.SSLHandshakeException: PLIX path building failed: sun.security.provider.certpath.SunCertPathBuilderException: unable to find valid certification path to requested target]
+```
+`{KEYCLOAK_HOME}/conf/keycloak.conf` 에 인증서 경로 및 changit 옵션 설정
+```
+# LDAP
+https-trust-store-type=default
+https-trust-store-file=/opt/openlogic-openjdk-21.0.5+11-linux-x64/lib/security/cacerts
+https-trust-store-password=changit
+```
