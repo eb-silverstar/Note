@@ -1,11 +1,8 @@
 ## Upgrade Spec
 Keyclok 25.0.0 부터 Java 21 지원 (Java 17 지원 중단)
 ```
-Keycloak 13.0.0
-JDK 1.8.0.202
-    ↓
-Keycloak 26.0.7
-JDK 21.0.5
+Keycloak 13.0.0    → Keycloak 26.0.7
+JDK 1.8.0.202      → JDK 21.0.5
 ```
 
 ## Server
@@ -106,16 +103,12 @@ Force a Default Value : Off
 ### login-event-listner
 #### Upgrade Spec
 ```
-JDK 1.8.0.202
-keycloak-server-spi-private 13.0.1
-keycloak-services 13.0.1
-        ↓
-JDK 21.0.5
-keycloak-server-spi-private 26.0.8
-keycloak-services 26.0.8
+JDK 1.8.0.202                            → JDK 21.0.5
+keycloak-server-spi-private 13.0.1       → keycloak-server-spi-private 26.0.8
+keycloak-services 13.0.1                 → keycloak-services 26.0.8
 ```
 #### Admin Console
-1. `{KEYCLOAK_HOME}/providers` 폴더에 login-event-listner.jar 파일을 놓고 기동시킨 후 Admin Console 접속
+1. `{KEYCLOAK_HOME}/providers` 폴더에 `login-event-listner.jar` 파일을 놓고 기동시킨 후 Admin Console 접속
 2. `Realm settings > Events > Event listners` 에서 login_event_listner 등록
 #### Bugfix
 Portal 호출 시 오류 발생
@@ -130,29 +123,82 @@ ERROR [com.kt.keycloak.event.listner.LoginEventListnerProvider] (executor-thread
 ### custom-username-password-form (LDAP용 비밀번호 암복호화)
 #### Upgrade Spec
 ```
-JDK 1.8.0.202
-keycloak-server-spi-private 13.0.1
-keycloak-core 13.0.1
-keycloak-server-spi 13.0.1
-keycloak-services 13.0.1
-nimbus-jose-jwt 9.4.2
-        ↓
-JDK 21.0.5
-keycloak-server-spi-private 26.0.8
-keycloak-core 26.0.8
-keycloak-server-spi 26.0.8
-keycloak-services 26.0.8
-nimbus-jose-jwt 9.40
+JDK 1.8.0.202                            → JDK 21.0.5
+keycloak-server-spi-private 13.0.1       → keycloak-server-spi-private 26.0.8
+keycloak-core 13.0.1                     → keycloak-core 26.0.8
+keycloak-server-spi 13.0.1               → keycloak-server-spi 26.0.8
+keycloak-services 13.0.1                 → keycloak-services 26.0.8
+nimbus-jose-jwt 9.4.2                    → nimbus-jose-jwt 9.40
 ```
 #### Import
 ```
-javax.ws.rs.core.*
-org.jboss.resteasy.specimpl.MultivaluedMapImpl
-        ↓
-jakarta.ws.rs.core.*
+javax.ws.rs.core.*                                → jakarta.ws.rs.core.*
+org.jboss.resteasy.specimpl.MultivaluedMapImpl    → 제거
 ```
 #### Code
 상속 받은 UsernamePasswordForm 파일을 참고하여 변경된 부분 수정
+#### Admin Console
+1. `{KEYCLOAK_HOME}/providers` 폴더에 `custom-username-password-form.jar` `nimbus-jose-jwt-9.40.jar` 파일을 놓고 기동시킨 후 Admin Console 접속
+2. `dev realm > Authentication > browser duplicate`
+```
+# browser with SMS
+kerberos                                      → 삭제
+browser with SMS Organization                 → 삭제
+Username Password Form                        → Custom Username Password Form
+browser with SMS Browser - Conditional OTP    → 삭제제
+```
+3. 생성한 browser with SMS 를 Browser flow 로 Bind
+
+### 2fa-sms (2차인증 SMS)
+#### Upgrade Spec
+```
+JDK 1.8.0.202                            → JDK 21.0.5
+keycloak-server-spi-private 13.0.1       → keycloak-server-spi-private 26.0.8
+keycloak-server-spi 13.0.1               → keycloak-server-spi 26.0.8
+keycloak-services 13.0.1                 → keycloak-services 26.0.8
+keycloak-parent 13.0.1                   → keycloak-parent 26.0.8
+```
+#### Import
+```
+javax.ws.rs.core.Response     → jakarta.ws.rs.core.Response
+```
+#### Code
+##### pom.xml
+```xml
+<properties>
+    <java.version>21</java.version>
+    <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <maven.compiler.source>${java.version}</maven.compiler.source>
+    <maven.compiler.target>${java.version></maven.compiler.target>
+    <keycloak.version>26.0.8</keycloak.version>
+    <maven-shade.version>3.2.4</maven-shade.version>
+</properties>
+
+<dependencies>
+    <dependency>
+        <groupId>org.keycloak</groupId>
+        <artifactId>keycloak-server-spi-private</artifactId>
+        <scope>provided</scope>
+    </dependency>
+    ...
+</dependencies>
+
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.keycloak</groupId>
+            <artifactId>keycloak-parent</artifactId>
+            <version>${keycloak.version}</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+```
+#### Admin Console
+1. `{KEYCLOAK_HOME}/providers` 폴더에 `2fa-sms-authenticator.jar` 파일을 놓고 기동시킨 후 Admin Console 접속
+2. `dev realm > Authentication > browser with SMS`
+3. Custom Username Password Form 다음 step 으로 SMS Authentication 추가
 
 ## Bugfix
 ### LDAP 인증서 오류
