@@ -54,6 +54,11 @@ keytool -import -alias ad -file "{USER_HOME}/ca.cer" -keystore "{JDK_HOME}/lib/s
 ```
 
 ## Admin Console
+### Realm Role
+`dev Realm > Realm roles`
+1. `Create role` dev-admin, dev-user 생성
+2. `default-roles-dev > Assign role` dev-user 추가
+
 ### LDAP 연동
 `dev Realm > User federation > Ldap > Settings`
 ```
@@ -145,9 +150,16 @@ org.jboss.resteasy.specimpl.MultivaluedMapImpl    → 제거
 kerberos                                      → 삭제
 browser with SMS Organization                 → 삭제
 Username Password Form                        → Custom Username Password Form
-browser with SMS Browser - Conditional OTP    → 삭제제
+browser with SMS Browser - Conditional OTP    → 삭제
 ```
 3. 생성한 browser with SMS 를 Browser flow 로 Bind
+4. 암호화 알고리즘으로 RSA-OAEP-256 을 사용할 경우, `dev Realm > Realm settings > Keys > Add providers > rsa-enc-generated` 생성
+```
+Priority : 0
+Enabled : On
+Active : On
+Algorithm : RSA-OAEP-256
+```
 
 ### 2fa-sms (2차인증 SMS)
 #### Upgrade Spec
