@@ -57,7 +57,7 @@ keytool -import -alias ad -file "{USER_HOME}/ca.cer" -keystore "{JDK_HOME}/lib/s
 ### Realm Role
 `dev Realm > Realm roles`
 1. `Create role` dev-admin, dev-user 생성
-2. `default-roles-dev > Assign role` dev-user 추가
+2. `Realm settings > User registration > Default roles > Assign role` dev-user 추가
 
 ### LDAP 연동
 `dev Realm > User federation > Ldap > Settings`
@@ -211,6 +211,13 @@ javax.ws.rs.core.Response     → jakarta.ws.rs.core.Response
 1. `{KEYCLOAK_HOME}/providers` 폴더에 `2fa-sms-authenticator.jar` 파일을 놓고 기동시킨 후 Admin Console 접속
 2. `dev realm > Authentication > browser with SMS`
 3. Custom Username Password Form 다음 step 으로 SMS Authentication 추가
+4. SMS Authentication 우측 톱니바퀴 클릭 하여 아래 정보 설정
+```
+Alias : sms-config
+Code length : 6
+Time-to-live : 180
+SenderId : Keycloak
+```
 
 ## Bugfix
 ### LDAP 인증서 오류
